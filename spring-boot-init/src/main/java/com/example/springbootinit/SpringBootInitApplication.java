@@ -24,6 +24,7 @@ public class SpringBootInitApplication {
      * 컨포넌트 스캔으로 아래 빈을 먼저 등록하고
      * 오토컨피규레이션으로 아래빈을 덮어써버림
      * 따라서 아래 코드가 묻힘.
+     * @ConditionalOnMissingBean 설정 :  중복설정시 덮어쓰기 방지
      * */
 //    @Bean
 //    public Holoman holoman(){
