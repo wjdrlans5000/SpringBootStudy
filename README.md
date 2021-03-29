@@ -138,3 +138,53 @@ public class WebMvcAutoConfiguration {
         - FQCN,\
         - FQCN
       - 6. mvn install
+   - 덮어쓰기 방지하기
+     - @ConditionalOnMissingBean
+   - 빈 재정의 수고 덜기
+     - @ConfigurationProperties(“holoman”)
+     - @EnableConfigurationProperties(HolomanProperties.class)
+     - 프로퍼티 키값 자동 완성
+```java
+@Configuration
+@EnableConfigurationProperties(HolomanProperties.class)
+public class HolomanConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public Holoman holoman(HolomanProperties properties){
+        Holoman holoman = new Holoman();
+        holoman.setHowLong(properties.getHowLong());
+        holoman.setName(properties.getName());
+        return holoman;
+    }
+}
+```
+```java
+@ConfigurationProperties("holoman")
+public class HolomanProperties {
+    private  String name;
+
+    private int howLong;
+
+    public int getHowLong() {
+        return howLong;
+    }
+
+    public void setHowLong(int howLong) {
+        this.howLong = howLong;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+```properties
+application.properties
+holoman.name = lazy
+holoman.howLong = 600
+```
