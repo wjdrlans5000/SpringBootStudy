@@ -183,6 +183,7 @@ public class HolomanProperties {
     }
 }
 ```
+```properties
 application.properties
 holoman.name = lazy
 holoman.howLong = 600
