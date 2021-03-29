@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65f20002-498c-4732-a017-ff5194d78373" name="Default Changelist" comment="" />
+    <list default="true" id="65f20002-498c-4732-a017-ff5194d78373" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/HolomanProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HolomanConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HolomanConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/spring-autoconfigure-metadata.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/spring-autoconfigure-metadata.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/HolomanConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/HolomanConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/gimun-spring-boot-starter-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/gimun-spring-boot-starter-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-boot-init/src/main/java/com/example/springbootinit/SpringBootInitApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-boot-init/src/main/java/com/example/springbootinit/SpringBootInitApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-boot-init/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-boot-init/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +26,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -22,6 +37,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1qLFZRAQHjFZ7cdnALrKvvbJAoY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -29,8 +45,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -43,6 +62,8 @@
       <option name="presentableId" value="Default" />
       <updated>1616851018037</updated>
       <workItem from="1616851021739" duration="3293000" />
+      <workItem from="1616855935872" duration="1459000" />
+      <workItem from="1617023168584" duration="1143000" />
     </task>
     <servers />
   </component>
@@ -50,29 +71,54 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1616851222433">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-1155" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1617023593380">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="-1155" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617023593380" />
     <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616851222433" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1616854739246">
+    <state x="740" y="218" key="FileChooserDialogImpl" timestamp="1616856535348">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="740" y="218" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616856535348" />
+    <state x="-1127" y="410" key="Github.ShareDialog" timestamp="1617024276247">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1127" y="410" key="Github.ShareDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024276247" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1617024127345">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024127345" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616854739246" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1616854739245">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1617024127345">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024127345" />
     <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616854739245" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1616854739245">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1617024127345">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024127345" />
     <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616854739245" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1616854739246">
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1617024127345">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024127345" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616854739246" />
+    <state x="619" y="217" key="NewModule_or_Project.wizard" timestamp="1616856593006">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616854739246" />
+    <state x="619" y="217" key="NewModule_or_Project.wizard/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616856593006" />
+    <state x="-1459" y="162" key="SettingsEditor" timestamp="1617024289952">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1459" y="162" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1617024289952" />
     <state x="616" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1616851134888">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616851134888" />
+    <state x="339" y="221" key="new project wizard" timestamp="1616856346975">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="339" y="221" key="new project wizard/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1616856346975" />
   </component>
 </project>

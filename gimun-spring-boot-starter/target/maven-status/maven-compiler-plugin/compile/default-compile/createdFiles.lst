@@ -1,3 +1,5 @@
 org\example\Holoman.class
 META-INF\spring-autoconfigure-metadata.properties
+META-INF\spring-configuration-metadata.json
+org\example\HolomanProperties.class
 org\example\HolomanConfiguration.class
