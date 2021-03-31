@@ -203,3 +203,9 @@ holoman.howLong = 600
     - DispatcherServletAutoConfiguration
       - 서블릿 만들고 등록
       
+# 내장 웹 서버 응용 1부 : 컨테이너와 서버 포트
+- Spring boot 는 기본적으로 Tomcat을 내장서버로 자동 설정된다.
+- 다른 서블릿 컨테이너로 변경가능
+  - 1. spring-boot-starter-web에서 tomcat을 exclusions 설정
+  - 2. jetty , netty 등 사용하고싶은 컨테이너를 의존성으로 추가하면 해당 웹서버로 구동할 수 있다.
+  - 
