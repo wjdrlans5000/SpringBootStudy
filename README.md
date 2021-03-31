@@ -234,4 +234,19 @@ server.port=7070
 #랜덤포트사용
 server.port=0
 ```
+- 스프링 부트 웹서버가 초기화되었을때 콜백되는 이벤트 리스너 설정
+- 스프링 부트에서 권장하는 베스트 프렉티스.
+
+```java
+@Component
+//ServletWebServerInitializedEvent < WebServer가 초기화가되면 해당 이벤트에대한 콜백이 이루어짐
+public class PortListener implements ApplicationListener<ServletWebServerInitializedEvent> {
+
+    @Override
+    public void onApplicationEvent(ServletWebServerInitializedEvent servletWebServerInitializedEvent) {
+        ServletWebServerApplicationContext applicationContext = servletWebServerInitializedEvent.getApplicationContext();
+        System.out.println(applicationContext.getWebServer().getPort());
+    }
+}
+```
 
