@@ -224,4 +224,14 @@ holoman.howLong = 600
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 ```
+- 의존성에 웹서버가 추가되어있으면 스프링 부트는 기본적으로 웹 어플리케이션으로 실행한다.
+- properties 파일에 추가하여 포트 등 웹서버 설정을 변경할수 있음.
+```xml
+#스프링 부트 애플리케이션 타입이 웹서버가 아니게 설정
+spring.main.web-application-type=none
+#웹서버 포트변경
+server.port=7070
+#랜덤포트사용
+server.port=0
+```
 
