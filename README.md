@@ -244,6 +244,7 @@ public class PortListener implements ApplicationListener<ServletWebServerInitial
 
     @Override
     public void onApplicationEvent(ServletWebServerInitializedEvent servletWebServerInitializedEvent) {
+      //웹서버 포트 가져오기
         ServletWebServerApplicationContext applicationContext = servletWebServerInitializedEvent.getApplicationContext();
         System.out.println(applicationContext.getWebServer().getPort());
     }
