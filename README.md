@@ -252,3 +252,15 @@ public class PortListener implements ApplicationListener<ServletWebServerInitial
 ```
 
 # 내장 웹 서버 응용 2부 : HTTPS와 HTTP2 적용
+- https 적용하기
+  - SSL인증서를 생성한다
+```
+keytool -genkey -alias spring -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
+```
+- 인증서 정보를 application.properties 파일에 추가
+```file
+server.ssl.key-store=keystore.p12
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store-password=123456
+server.ssl.key-alias=spring
+```
