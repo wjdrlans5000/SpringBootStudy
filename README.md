@@ -263,4 +263,14 @@ server.ssl.key-store-type=PKCS12
 server.ssl.key-store-password=123456
 server.ssl.key-alias=spring
 ```
-- 
+- 해당 설정 후 웹 서버 실행시 https아니면 접근할수 없게됨.(스프링 부트는 http 커넥터가 하나이며 그 커넥터에 https를 적용했기에 http를 받을 커넥터가 없음)
+- 아래 curl 명령어로 접근해보면 접근이 되지않고 안내문구가 나오게 된다.
+```
+curl -I --http2 https://localhost:8080/hello
+```
+- 그이유는 SSL인증서를 로컬에서 생성했기때문에 해당 인증서가 공인인증서가 아니기때문에(pubKey정보를 모르기때문)
+- -k 옵션을줘서 무시하면 200 코드와 함께 접근이 가능해진다.
+```
+curl -I -k --http2 https://localhost:8080
+```
+- http를 추가로 받기위해선 커넥터를 추가해주어야 함
