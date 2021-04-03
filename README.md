@@ -292,3 +292,10 @@ curl -I -k --http2 https://localhost:8080/hello
         return connector;
     }
 ```
+- http2를 활성화하는 방법
+  - application.properties에 다음 추가
+```xml
+# http2를 지원하는 설정 (undertow는 https설정이 되어있다면 추가적인 설정이 필요가없다.)
+# tomcat 8.5 Version 에서는 추가적인 설정이필요하지만 매우 복잡하다 tomcat 9 로 올리는것을 추천..
+server.http2.enabled=true
+```
