@@ -276,3 +276,19 @@ curl -I --http2 https://localhost:8080/hello
 curl -I -k --http2 https://localhost:8080/hello
 ```
 - http를 추가로 받기위해선 커넥터를 추가해주어야 함
+- 다음과 같이 Bean으로 TomcatServletWebServerFactory로 커넥터를 생성하여 등록해주고나면 https 와 http 요청 모두 받을 수 있다.
+- port는 다르게 설정필요
+```java
+    @Bean
+    public ServletWebServerFactory servletWebServerFactory () {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
+        return tomcat;
+    }
+
+    private Connector createStandardConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setPort(8090);
+        return connector;
+    }
+```
