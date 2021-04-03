@@ -296,7 +296,8 @@ curl -I -k --http2 https://localhost:8080/hello
   - application.properties에 다음 추가
 ```xml
 # http2를 지원하는 설정 (undertow는 https설정이 되어있다면 추가적인 설정이 필요가없다.)
-# tomcat9,jdk8 이하 버전에서는 매우 복잡. 아래 문서 참고
+# tomcat9,jdk8 이하 버전에서는 매우 복잡. 아래 문서 참고 tomcat9, jdk9 이상 사용 권장(꼭!)
 # https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-embedded-web-servers
 server.http2.enabled=true
 ```
+
