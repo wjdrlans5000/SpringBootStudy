@@ -271,6 +271,6 @@ curl -I --http2 https://localhost:8080/hello
 - 그이유는 SSL인증서를 로컬에서 생성했기때문에 해당 인증서가 공인인증서가 아니기때문에(pubKey정보를 모르기때문)
 - -k 옵션을줘서 무시하면 200 코드와 함께 접근이 가능해진다.
 ```
-curl -I -k --http2 https://localhost:8080
+curl -I -k --http2 https://localhost:8080/hello
 ```
 - http를 추가로 받기위해선 커넥터를 추가해주어야 함
