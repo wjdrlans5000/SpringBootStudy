@@ -244,9 +244,60 @@ public class PortListener implements ApplicationListener<ServletWebServerInitial
 
     @Override
     public void onApplicationEvent(ServletWebServerInitializedEvent servletWebServerInitializedEvent) {
+      //웹서버 포트 가져오기
         ServletWebServerApplicationContext applicationContext = servletWebServerInitializedEvent.getApplicationContext();
         System.out.println(applicationContext.getWebServer().getPort());
     }
 }
+```
+
+# 내장 웹 서버 응용 2부 : HTTPS와 HTTP2 적용
+- https 적용 - SSL인증서를 생성한다
+- window에서 keysotre명령어는 jre 설치 경로에서 진행해야함.
+- 터미널을 관리자권한으로 실행해야함.
+```
+keytool -genkey -alias spring -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
+```
+- 인증서 정보를 application.properties 파일에 추가
+```file
+server.ssl.key-store=keystore.p12
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store-password=123456
+server.ssl.key-alias=spring
+```
+- 해당 설정 후 웹 서버 실행시 https아니면 접근할수 없게됨.(스프링 부트는 http 커넥터가 하나이며 그 커넥터에 https를 적용했기에 http를 받을 커넥터가 없음)
+- 아래 curl 명령어로 접근해보면 접근이 되지않고 안내문구가 나오게 된다.
+```
+curl -I --http2 https://localhost:8080/hello
+```
+- 그이유는 SSL인증서를 로컬에서 생성했기때문에 해당 인증서가 공인인증서가 아니기때문에(pubKey정보를 모르기때문)
+- -k 옵션을줘서 무시하면 200 코드와 함께 접근이 가능해진다.
+```
+curl -I -k --http2 https://localhost:8080/hello
+```
+- http를 추가로 받기위해선 커넥터를 추가해주어야 함
+- 다음과 같이 Bean으로 TomcatServletWebServerFactory로 커넥터를 생성하여 등록해주고나면 https 와 http 요청 모두 받을 수 있다.
+- port는 다르게 설정필요
+```java
+    @Bean
+    public ServletWebServerFactory servletWebServerFactory () {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
+        return tomcat;
+    }
+
+    private Connector createStandardConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setPort(8090);
+        return connector;
+    }
+```
+- http2를 활성화하는 방법
+  - application.properties에 다음 추가
+```xml
+# http2를 지원하는 설정 (undertow는 https설정이 되어있다면 추가적인 설정이 필요가없다.)
+# tomcat9,jdk8 이하 버전에서는 매우 복잡. 아래 문서 참고 tomcat9, jdk9 이상 사용 권장(꼭!)
+# https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-embedded-web-servers
+server.http2.enabled=true
 ```
 
