@@ -253,6 +253,8 @@ public class PortListener implements ApplicationListener<ServletWebServerInitial
 
 # 내장 웹 서버 응용 2부 : HTTPS와 HTTP2 적용
 - https 적용 - SSL인증서를 생성한다
+- window에서 keysotre명령어는 jre 설치 경로에서 진행해야함.
+- 터미널을 관리자권한으로 실행해야함.
 ```
 keytool -genkey -alias spring -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
 ```
