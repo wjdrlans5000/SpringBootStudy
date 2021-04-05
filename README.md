@@ -314,5 +314,5 @@ server.http2.enabled=true
     - 내장 JAR : 기본적으로 자바에는 내장 JAR를 로딩하는 표준적인 방법이 없음.
     - 애플리케이션 클래스와 라이브러리 위치 구분
     - org.springframework.boot.loader.jar.JarFile을 사용해서 내장 JAR를 읽는다.
-
+  - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
 
