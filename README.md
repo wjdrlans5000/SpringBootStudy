@@ -301,3 +301,18 @@ curl -I -k --http2 https://localhost:8080/hello
 server.http2.enabled=true
 ```
 
+# 독립적으로 실행 가능한 jars
+- spring boot maven plugin 에 관련된 이야기
+  - mvn clean package 명령어를 실행하면 , target폴더 아래 파일들을 삭제하고(clean) 패키징(package)하여 실행가능한 JAR파일이 생성된다.
+  - 해당 jar파일 하나로 앱이 구동된다.
+  - 앱에 필요한 의존성 들도 같이 jar파일 하나에 같이 들어간다.
+  - 과거 “uber” jar 를 사용
+    - 모든 클래스 (의존성 및 애플리케이션)를 하나로 압축하는 방법
+    - 뭐가 어디에서 온건지 알 수가 없음
+      - 무슨 라이브러리를 쓰는건지..
+  - 스프링 부트의 전략
+    - 내장 JAR : 기본적으로 자바에는 내장 JAR를 로딩하는 표준적인 방법이 없음.
+    - 애플리케이션 클래스와 라이브러리 위치 구분
+    - org.springframework.boot.loader.jar.JarFile을 사용해서 내장 JAR를 읽는다.
+
+
