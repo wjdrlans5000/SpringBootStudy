@@ -315,4 +315,5 @@ server.http2.enabled=true
     - 애플리케이션 클래스와 라이브러리 위치 구분
     - org.springframework.boot.loader.jar.JarFile을 사용해서 내장 JAR를 읽는다.
   - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
-
+  - mvn package 명령 실행시 spring-boot-starter-parent 2.4.4 버전에서 spring-boot-maven-plugin 버전오류 발생하네...
+  - 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
