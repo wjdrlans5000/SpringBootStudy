@@ -328,7 +328,7 @@ server.http2.enabled=true
   - 스프링부트는 빈을 두단계에 거쳐서 등록한다.
   - 1. @ComponentScan
   - 2. @EnableAutoConfiguration
-  - @Conditional...
+  - 위 두 단계로 스캔을 하며 AutoConfiguration 클래스 목록(@ConditionalOnXxxYyyZzz(컨디셔널 온 미싱빈 등))을 참조하여 자동설정을 시작 
 - 내장 웹서버
   - 스탠다드얼론(독립적으로 실행가능한) 웹 애플리케이션을 제공함.
   - 스프링부트는 웹서버가 아니다.
