@@ -15,6 +15,8 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
+<!--        에플레케이션을 JAR파일로 패키징시 해당 플러그인 버전 오류발생하여 하위버전으로 오버라이딩-->
+<!--        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>-->
     </properties>
     <dependencies>
         <dependency>
