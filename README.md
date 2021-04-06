@@ -301,3 +301,43 @@ curl -I -k --http2 https://localhost:8080/hello
 server.http2.enabled=true
 ```
 
+# 독립적으로 실행 가능한 jars
+- spring boot maven plugin 에 관련된 이야기
+  - mvn clean package 명령어를 실행하면 , target폴더 아래 파일들을 삭제하고(clean) 패키징(package)하여 실행가능한 JAR파일이 생성된다.
+  - 해당 jar파일 하나로 앱이 구동된다.
+  - 앱에 필요한 의존성 들도 같이 jar파일 하나에 같이 들어간다.
+  - 과거 “uber” jar 를 사용
+    - 모든 클래스 (의존성 및 애플리케이션)를 하나로 압축하는 방법
+    - 뭐가 어디에서 온건지 알 수가 없음
+      - 무슨 라이브러리를 쓰는건지..
+  - 스프링 부트의 전략
+    - 내장 JAR : 기본적으로 자바에는 내장 JAR를 로딩하는 표준적인 방법이 없음.
+    - 애플리케이션 클래스와 라이브러리 위치 구분
+    - org.springframework.boot.loader.jar.JarFile을 사용해서 내장 JAR를 읽는다.
+  - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
+  - mvn package 명령 실행시 spring-boot-starter-parent 2.4.4 버전에서 spring-boot-maven-plugin 버전관련? 오류 발생하네...
+    - spring-boot-starter-parent 2.4.4 의 parent인 spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version이 3.2.0 인데 오류발생
+  - 해결방법..
+    - 1. 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
+    - 2. spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version 을 하위버전으로 오버라이딩
+    ```xml
+        <properties>
+          <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        </properties>
+    ```
+
+# Spring boot 원리 정리
+- 의존성 관리
+  - spring-boot-starter 는 스프링부트의 의존성을 관리
+  - spring-boot-starter-parent 가 스프링 부트 의존성 관리의 핵심
+    - 스프링부트가 관리하는 주요라이브러리의 버전들을 볼수 있음(spring-boot-dependencies에서)
+  - parent로 받는방법과 denpendencyManagement로 받는것과는 큰 차이가 있음(절대 같은게 아님)
+- 자동 설정
+  - 스프링부트는 빈을 두단계에 거쳐서 등록한다.
+  - 1. @ComponentScan
+  - 2. @EnableAutoConfiguration
+  - 위 두 단계로 스캔을 하며 AutoConfiguration 클래스 목록(@ConditionalOnXxxYyyZzz(컨디셔널 온 미싱빈 등))을 참조하여 자동설정을 시작 
+- 내장 웹서버
+  - 스탠다드얼론(독립적으로 실행가능한) 웹 애플리케이션을 제공함.
+  - 스프링부트는 웹서버가 아니다.
+
