@@ -317,3 +317,19 @@ server.http2.enabled=true
   - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
   - mvn package 명령 실행시 spring-boot-starter-parent 2.4.4 버전에서 spring-boot-maven-plugin 버전오류 발생하네...
   - 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
+
+# Spring boot 원리 정리
+- 의존성 관리
+  - spring-boot-starter 는 스프링부트의 의존성을 관리
+  - spring-boot-starter-parent 가 스프링 부트 의존성 관리의 핵심
+    - 스프링부트가 관리하는 주요라이브러리의 버전들을 볼수 있음(spring-boot-dependencies에서)
+  - parent로 받는방법과 denpendencyManagement로 받는것과는 큰 차이가 있음(절대 같은게 아님)
+- 자동 설정
+  - 스프링부트는 빈을 두단계에 거쳐서 등록한다.
+  - 1. @ComponentScan
+  - 2. @EnableAutoConfiguration
+  - @Conditional...
+- 내장 웹서버
+  - 스탠다드얼론(독립적으로 실행가능한) 웹 애플리케이션을 제공함.
+  - 스프링부트는 웹서버가 아니다.
+
