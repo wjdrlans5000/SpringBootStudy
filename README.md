@@ -316,7 +316,16 @@ server.http2.enabled=true
     - org.springframework.boot.loader.jar.JarFile을 사용해서 내장 JAR를 읽는다.
   - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
   - mvn package 명령 실행시 spring-boot-starter-parent 2.4.4 버전에서 spring-boot-maven-plugin 버전관련? 오류 발생하네...
-  - 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
+    - spring-boot-starter-parent 2.4.4 의 parent인 spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version이 3.2.0 인데 오류발생
+  - 해결방법..
+    - 1. 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
+    - 2. spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version 을 오버라이딩
+    ```xml
+        <properties>
+          <java.version>11</java.version>
+          <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        </properties>
+    ```
 
 # Spring boot 원리 정리
 - 의존성 관리
