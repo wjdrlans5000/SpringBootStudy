@@ -319,10 +319,9 @@ server.http2.enabled=true
     - spring-boot-starter-parent 2.4.4 의 parent인 spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version이 3.2.0 인데 오류발생
   - 해결방법..
     - 1. 2.3.4.RELEASE에서 정상동작 (2.4.0까지 안됨 릴리즈버전에서 되는듯..)
-    - 2. spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version 을 오버라이딩
+    - 2. spring-boot-dependencies의 프로퍼티 maven-resources-plugin-version 을 하위버전으로 오버라이딩
     ```xml
         <properties>
-          <java.version>11</java.version>
           <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         </properties>
     ```
