@@ -382,7 +382,7 @@ public class Applicaiton {
     }
   ```
 - failure/banner 참조 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-application
-- Spring Application Builder 클래스를 활용하여 빌더패턴을 사용할 수도있다.
+- SpringBootApplication 실행방법으로 SpringApplicationBuilder를 활용하여 빌더패턴을 사용하는 방법도 있다.
 ```java
   @SpringBootApplication
   public class Applicaiton {
@@ -394,3 +394,39 @@ public class Applicaiton {
       }
   }
 ```
+- spring 에서 제공해주는 ApplicationEvent
+  - 이벤트의 다양한 시점이 존재한다.(애플리케이션 구동 전후, 준비완료, 실패 등)
+  - 애플리케이션 리스너의 이벤트 발생시점이 중요하다.
+  - 애플리케이션 컨텍스트가 생성 된 후 이벤트일 경우
+    - 리스너를 생성한뒤 빈으로 등록되어있다면 , 해당 이벤트가 발생시 이벤트리스너가 콜백된다.
+  - 애플리케이션 컨텍스트가 생성되기 이전의 이벤트일 경우
+    - 빈으로 등록하고 해당 이벤트가 발생하여도 리스너가 동작하지않는다.
+    - 이러한 경우에는 직접 등록을 해주어야한다.
+  ```java
+      /**
+    * 애플리케이션 리스너 등록 
+    * " 애플리케이션 이벤트 발생시점에 주의 " 
+    */
+    //ApplicationStartingEvent 에플리케이션 맨처음에 동작하는 이벤트
+    //컨텍스트 생성이전의 이벤트이므로 빈으로 등록되더라도 콜백X
+    //@Component
+    public class SimpleListener implements ApplicationListener<ApplicationStartingEvent> {
+
+        @Override
+        public void onApplicationEvent(ApplicationStartingEvent applicationStartingEvent) {
+          System.out.println("====================");
+          System.out.println("Application is starting");
+          System.out.println("====================");
+        }
+    }
+    @SpringBootApplication
+    public class Applicaiton {
+
+        public static void main(String[] args){
+            SpringApplication application = new SpringApplication();
+            //애플리케이션 컨텍스트 생성이전의 이벤트일 경우 수동 등록
+            application.addListeners(new SimpleListener());
+            application.run(args);
+        }
+    }
+  ```
