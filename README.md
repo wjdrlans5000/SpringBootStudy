@@ -356,3 +356,6 @@ public class Applicaiton {
     }
 }
 ```
+- spring boot application 실행시 ,인텔리제이 vm옵션으로 -Ddebug 또는 program argument로 --debug옵션을 주게되면 디버그모드로 애플리케이션이 동작을한다.
+  - 로그레벨도 Debug레벨도 동작한다.
+- 애플리케이션 실행시 출력되는 Debug 로그는 스프링부트가 제공하는 자동설정중 어떠한 설정이 자동설정되었는지, 혹은 어떤 자동설정이 되지않았는지를 알려준다.
