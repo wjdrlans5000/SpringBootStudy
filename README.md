@@ -430,3 +430,27 @@ public class Applicaiton {
         }
     }
   ```
+- WebApplicationType 설정
+- 스프링부트 애플리케이션의 타입은 NONE, SERVLET , REACTIVE 로 크게 3가지로 분류
+  - 기본적으로 spring-web-mvc가 존재한다면 SERVLET으로 실행
+  - spring webflux가 존재한다면 REACTIVE로 실행한다.(servlet이 없을경우)
+  - 둘다 없으면 NONE로 실행
+- 애플리케이션 아규먼트 사용하기
+  - 애플리케이션 실행시 --옵션 으로 들어오는 경우 (Configurations의 program arguments)
+  - jar -000.jar --bar 이런식으로 아규먼트를 줌 jar파일 실행시
+- 애플리케이션 실행한 뒤 무언가를 실행하고 싶은경우
+  - ApplicationRunner (추천) 또는 CommandLineRunner(jvm옵션은 무시)
+    - ApplicationArguments를 인자로 받는다.  (추상화된 API를 사용하여 코딩이 가능함) 
+    ```java
+      @Component
+      public class SampleListener implements ApplicationRunner {
+
+          @Override
+          public void run(ApplicationArguments args) throws Exception {
+              System.out.println("foo : " + args.containsOption("foo"));
+              System.out.println("bar : " + args.containsOption("bar"));
+          }
+
+      }
+    ```
+  - 순서 지정 가능 @Order
