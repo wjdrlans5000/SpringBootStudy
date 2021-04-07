@@ -341,3 +341,18 @@ server.http2.enabled=true
   - 스탠다드얼론(독립적으로 실행가능한) 웹 애플리케이션을 제공함.
   - 스프링부트는 웹서버가 아니다.
 
+# Spring boot 활용 - springApplication
+- 기본 로그 레벨은 INFO
+- 다음은 기본 스프링부트 애플리케이션이다. 아래처럼 static메서드를 활용하여 스프링부트 애플리케이션을 실행할경우 SpringApplication 클래스가 제공하는 다양한 커스터마이징을 활용하기가 어렵기때문에 SpringApplication 클래스의 인스턴스를 생성하여 실행 하는게 좋다.
+```java
+@SpringBootApplication
+public class Applicaiton {
+
+    public static void main(String[] args){
+        SpringApplication.run(Applicaiton.class,args);
+        //인스턴스 생성하여 실행 하는게 좋음
+        //SpringApplication application = new SpringApplication();
+        //application.run(args);
+    }
+}
+```
