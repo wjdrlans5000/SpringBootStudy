@@ -453,4 +453,4 @@ public class Applicaiton {
 
       }
     ```
-  - 순서 지정 가능 @Order
+  - 순서 지정 가능 @Order(숫자가 낮을수록 우선순위)
