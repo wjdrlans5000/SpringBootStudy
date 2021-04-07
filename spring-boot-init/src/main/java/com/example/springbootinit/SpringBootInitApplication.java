@@ -1,10 +1,13 @@
 package com.example.springbootinit;
 
 
+import javafx.application.Application;
 import org.example.Holoman;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 
 import javax.servlet.ServletException;
@@ -54,7 +57,20 @@ public class SpringBootInitApplication {
         SpringApplication application = new SpringApplication(SpringBootInitApplication.class);
 //        application.setWebApplicationType(WebApplicationType.NONE);
 //        application.setWebApplicationType(WebApplicationType.SERVLET);
+
+        //배너끄기
+//        application.setBannerMode(Banner.Mode.OFF);
+
+        //애플리케이션 컨텍스트 생성이전의 이벤트일 경우 수동 등록
+//        application.addListeners(new SampleListener());
+
+        application.setWebApplicationType(WebApplicationType.NONE);
         application.run(args);
+
+        //Spring Application Builder 클래스를 활용하여 빌더패턴을 사용
+//        new SpringApplicationBuilder()
+//                .sources(Application.class)
+//                .run(args);
     }
     /*
      * 컨포넌트 스캔으로 아래 빈을 먼저 등록하고
