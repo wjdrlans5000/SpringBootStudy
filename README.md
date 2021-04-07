@@ -341,3 +341,116 @@ server.http2.enabled=true
   - 스탠다드얼론(독립적으로 실행가능한) 웹 애플리케이션을 제공함.
   - 스프링부트는 웹서버가 아니다.
 
+# Spring boot 활용 - springApplication
+- 기본 로그 레벨은 INFO
+- 다음은 기본 스프링부트 애플리케이션이다. 아래처럼 static메서드를 활용하여 스프링부트 애플리케이션을 실행할경우 SpringApplication 클래스가 제공하는 다양한 커스터마이징을 활용하기가 어렵기때문에 SpringApplication 클래스의 인스턴스를 생성하여 실행 하는게 좋다.
+```java
+@SpringBootApplication
+public class Applicaiton {
+
+    public static void main(String[] args){
+        SpringApplication.run(Applicaiton.class,args);
+        //인스턴스 생성하여 실행 하는게 좋음
+        //SpringApplication application = new SpringApplication();
+        //application.run(args);
+    }
+}
+```
+- spring boot application 실행시 ,인텔리제이 vm옵션으로 -Ddebug 또는 program argument로 --debug옵션을 주게되면 디버그모드로 애플리케이션이 동작을한다.
+  - 로그레벨도 Debug레벨도 동작한다.
+- 애플리케이션 실행시 출력되는 Debug 로그는 스프링부트가 제공하는 자동설정중 어떠한 설정이 자동설정되었는지, 혹은 어떤 자동설정이 되지않았는지를 알려준다.
+- Spring boot FailureAnalyers
+  - FailureAnalyers는 스프링 애플리케이션 실행중 에러가 발생했을때 해당 에러메시지를 좀더 깔끔하고 보기 쉽게 출력하도록 도와준다.
+  - 스프링부트는 기본적으로 몇몇 FailureAnalyers가 등록되어있으며 직접 등록할수도있다.
+- Spring boot banner
+  - 애플리케이션 실행시 보이는 배너를 커스터마이징 할 수있다.
+  - src > main > resources > banner.txt || gif || png || jpg 배너파일을 위치시키면 스프링부트 애플리케이션 실행시 해당 배너가 출력된다.
+  - 스프링의 버전 등을 출력할 수 있는 변수들을 제공한다.
+  - 일부 변수는 MANIFEST파일이 생성되어야 출력가능하다.(ex)${pplication.version})
+  - 패키징시 메니페스트 파일이 만들어지므로 jar파일로 패키징하여 실행하면 위 정보가 출력됨.
+  - 배너를 끄고싶은경우 애플리케이션 실행 옵션을 줄 수 있다.
+  ```java
+    @SpringBootApplication
+    public class Applicaiton {
+
+        public static void main(String[] args){
+            SpringApplication application = new SpringApplication();
+             //배너를 끄기
+            application.setBannerMode(Banner.Mode.OFF);
+            application.run(args);
+        }
+    }
+  ```
+- failure/banner 참조 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-application
+- SpringBootApplication 실행방법으로 SpringApplicationBuilder를 활용하여 빌더패턴을 사용하는 방법도 있다.
+```java
+  @SpringBootApplication
+  public class Applicaiton {
+
+      public static void main(String[] args){
+          new SpringApplicationBuilder()
+                      .sources(Applicaiton.class)
+                      .run(args);
+      }
+  }
+```
+- spring 에서 제공해주는 ApplicationEvent
+  - 이벤트의 다양한 시점이 존재한다.(애플리케이션 구동 전후, 준비완료, 실패 등)
+  - 애플리케이션 리스너의 이벤트 발생시점이 중요하다.
+  - 애플리케이션 컨텍스트가 생성 된 후 이벤트일 경우
+    - 리스너를 생성한뒤 빈으로 등록되어있다면 , 해당 이벤트가 발생시 이벤트리스너가 콜백된다.
+  - 애플리케이션 컨텍스트가 생성되기 이전의 이벤트일 경우
+    - 빈으로 등록하고 해당 이벤트가 발생하여도 리스너가 동작하지않는다.
+    - 이러한 경우에는 직접 등록을 해주어야한다.
+  ```java
+      /**
+    * 애플리케이션 리스너 등록 
+    * " 애플리케이션 이벤트 발생시점에 주의 " 
+    */
+    //ApplicationStartingEvent 에플리케이션 맨처음에 동작하는 이벤트
+    //컨텍스트 생성이전의 이벤트이므로 빈으로 등록되더라도 콜백X
+    //@Component
+    public class SimpleListener implements ApplicationListener<ApplicationStartingEvent> {
+
+        @Override
+        public void onApplicationEvent(ApplicationStartingEvent applicationStartingEvent) {
+          System.out.println("====================");
+          System.out.println("Application is starting");
+          System.out.println("====================");
+        }
+    }
+    @SpringBootApplication
+    public class Applicaiton {
+
+        public static void main(String[] args){
+            SpringApplication application = new SpringApplication();
+            //애플리케이션 컨텍스트 생성이전의 이벤트일 경우 수동 등록
+            application.addListeners(new SimpleListener());
+            application.run(args);
+        }
+    }
+  ```
+- WebApplicationType 설정
+- 스프링부트 애플리케이션의 타입은 NONE, SERVLET , REACTIVE 로 크게 3가지로 분류
+  - 기본적으로 spring-web-mvc가 존재한다면 SERVLET으로 실행
+  - spring webflux가 존재한다면 REACTIVE로 실행한다.(servlet이 없을경우)
+  - 둘다 없으면 NONE로 실행
+- 애플리케이션 아규먼트 사용하기
+  - 애플리케이션 실행시 --옵션 으로 들어오는 경우 (Configurations의 program arguments)
+  - jar -000.jar --bar 이런식으로 아규먼트를 줌 jar파일 실행시
+- 애플리케이션 실행한 뒤 무언가를 실행하고 싶은경우
+  - ApplicationRunner (추천) 또는 CommandLineRunner(jvm옵션은 무시)
+    - ApplicationArguments를 인자로 받는다.  (추상화된 API를 사용하여 코딩이 가능함) 
+    ```java
+      @Component
+      public class SampleListener implements ApplicationRunner {
+
+          @Override
+          public void run(ApplicationArguments args) throws Exception {
+              System.out.println("foo : " + args.containsOption("foo"));
+              System.out.println("bar : " + args.containsOption("bar"));
+          }
+
+      }
+    ```
+  - 순서 지정 가능 @Order(숫자가 낮을수록 우선순위)
