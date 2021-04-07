@@ -359,3 +359,13 @@ public class Applicaiton {
 - spring boot application 실행시 ,인텔리제이 vm옵션으로 -Ddebug 또는 program argument로 --debug옵션을 주게되면 디버그모드로 애플리케이션이 동작을한다.
   - 로그레벨도 Debug레벨도 동작한다.
 - 애플리케이션 실행시 출력되는 Debug 로그는 스프링부트가 제공하는 자동설정중 어떠한 설정이 자동설정되었는지, 혹은 어떤 자동설정이 되지않았는지를 알려준다.
+- Spring boot FailureAnalyers
+  - FailureAnalyers는 스프링 애플리케이션 실행중 에러가 발생했을때 해당 에러메시지를 좀더 깔끔하고 보기 쉽게 출력하도록 도와준다.
+  - 스프링부트는 기본적으로 몇몇 FailureAnalyers가 등록되어있으며 직접 등록할수도있다.
+- Spring boot banner
+  - 애플리케이션 실행시 보이는 배너를 커스터마이징 할 수있다.
+  - src > main > resources > banner.txt || gif || png || jpg 배너파일을 위치시키면 스프링부트 애플리케이션 실행시 해당 배너가 출력된다.
+  - 스프링의 버전 등을 출력할 수 있는 변수들을 제공한다.
+  - 일부 변수는 MANIFEST파일이 생성되어야 출력가능하다.(ex)${pplication.version})
+  - 배너를 끄고싶은경우 다음과 같이 애플리케이션 실행시 옵션을 줄수있다.
+- https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-application
