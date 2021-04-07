@@ -367,5 +367,30 @@ public class Applicaiton {
   - src > main > resources > banner.txt || gif || png || jpg 배너파일을 위치시키면 스프링부트 애플리케이션 실행시 해당 배너가 출력된다.
   - 스프링의 버전 등을 출력할 수 있는 변수들을 제공한다.
   - 일부 변수는 MANIFEST파일이 생성되어야 출력가능하다.(ex)${pplication.version})
-  - 배너를 끄고싶은경우 다음과 같이 애플리케이션 실행시 옵션을 줄수있다.
-- https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-application
+  - 패키징시 메니페스트 파일이 만들어지므로 jar파일로 패키징하여 실행하면 위 정보가 출력됨.
+  - 배너를 끄고싶은경우 애플리케이션 실행 옵션을 줄 수 있다.
+  ```java
+    @SpringBootApplication
+    public class Applicaiton {
+
+        public static void main(String[] args){
+            SpringApplication application = new SpringApplication();
+             //배너를 끄기
+            application.setBannerMode(Banner.Mode.OFF);
+            application.run(args);
+        }
+    }
+  ```
+- failure/banner 참조 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-application
+- Spring Application Builder 클래스를 활용하여 빌더패턴을 사용할 수도있다.
+```java
+  @SpringBootApplication
+  public class Applicaiton {
+
+      public static void main(String[] args){
+          new SpringApplicationBuilder()
+                      .sources(Applicaiton.class)
+                      .run(args);
+      }
+  }
+```
