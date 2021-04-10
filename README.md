@@ -454,3 +454,35 @@ public class Applicaiton {
       }
     ```
   - 순서 지정 가능 @Order(숫자가 낮을수록 우선순위)
+
+# Spring boot 활용 - 외부설정
+- 사용할 수 있는 외부 설정
+  - properties
+  - YAML
+  - 환경 변수
+  - 커맨드 라인 아규먼트
+- 스프링부트에서 properties를 사용한 외부설정의 경우 application.properties파일을 이용하는것이 일반적이다.
+- 사용방법
+  - application.properties파일에 사용할 속성 정의
+  ```
+   #application.properties 파일설정
+   gimun.name = gimun
+  ```
+  - org.springframework.beans.factory.annotation.Value 애노테이션을 활용
+  ```java
+      @Component
+    public class SpringRunner  implements ApplicationRunner {
+
+        @Value("{gimun.name}")
+        private String name;
+
+        @Override
+        public void run(ApplicationArguments args) throws Exception {
+            System.out.println("======================");
+            System.out.println(name);
+            System.out.println("======================");
+
+        }
+    }
+  ```
+  
