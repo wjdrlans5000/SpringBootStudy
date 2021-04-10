@@ -503,4 +503,14 @@ public class Applicaiton {
   - 15. JAR 안에 있는 application properties
   - 16. @PropertySource
   - 17. 기본 프로퍼티 (SpringApplication.setDefaultProperties)
-> application.properties 우선 순위 (높은게 낮은걸 덮어 씁니다.)
+  > application.properties 우선 순위 (높은게 낮은걸 덮어 씁니다.)
+
+- 모든 Property들은 Environment 객체를 활용하여 사용할 수 있다.
+- test 실행시 properties 발생현상
+  - src 하위를 빌드한다.
+  - test 하위를 빌드한다.
+  - test/resources/application.properties가 존재한다면 , test/하위에 존재하는 properties로 src의 프로퍼티가 오버라이딩 된다.
+- test용 properties를 사용할때 주의할점
+  - 빌드시 src 디렉터리를 먼저 빌드하고 test 디렉터리를 빌드하는데 src 에 존재하는 properties에는 존재하지만 , test의 properties에는 존재하지않는 프로퍼티가 있고 , 그 값을 참조하는 경우 예     외가 발생한다. 즉, 잠정적 버그를 발생시킬 여지가 있음.
+  - 
+
