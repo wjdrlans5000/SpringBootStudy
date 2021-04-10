@@ -538,3 +538,23 @@ public class ExternalsettingApplicationTests {
 
 }
 ```
+
+- @TestPropertySource 애노테이션을 활용하는 방법
+- properties 애트리뷰트로 직접 오버라이딩하거나 ,location으로 properties파일을 명시할 수 있다.
+```java
+@RunWith(SpringRunner.class)
+//@TestPropertySource(properties = {"gimun.name=gimuntest","gimun.name=gimuntest"})
+@TestPropertySource(locations = "classpath:/test.properties")
+@SpringBootTest()
+public class ExternalsettingApplicationTests {
+
+    @Autowired
+    Environment environment;
+
+    @Test
+    public void contextLoads() {
+        assertThat(environment.getProperty("gimun.name")).isEqualTo("gimuntest");
+    }
+
+}
+```
