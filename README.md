@@ -503,4 +503,4 @@ public class Applicaiton {
   - 15. JAR 안에 있는 application properties
   - 16. @PropertySource
   - 17. 기본 프로퍼티 (SpringApplication.setDefaultProperties)
-- application.properties 우선 순위 (높은게 낮은걸 덮어 씁니다.)
+> application.properties 우선 순위 (높은게 낮은걸 덮어 씁니다.)
