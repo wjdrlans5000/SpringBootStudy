@@ -454,3 +454,114 @@ public class Applicaiton {
       }
     ```
   - 순서 지정 가능 @Order(숫자가 낮을수록 우선순위)
+
+# Spring boot 활용 - 외부설정
+- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config
+- 사용할 수 있는 외부 설정
+  - properties
+  - YAML
+  - 환경 변수
+  - 커맨드 라인 아규먼트
+- 스프링부트에서 properties를 사용한 외부설정의 경우 application.properties파일을 이용하는것이 일반적이다.
+- 사용방법
+  - application.properties파일에 사용할 속성 정의
+  ```
+   #application.properties 파일설정
+   gimun.name = gimun
+  ```
+  - org.springframework.beans.factory.annotation.Value 애노테이션을 활용
+  ```java
+      @Component
+    public class SpringRunner  implements ApplicationRunner {
+
+        @Value("{gimun.name}")
+        private String name;
+
+        @Override
+        public void run(ApplicationArguments args) throws Exception {
+            System.out.println("======================");
+            System.out.println(name);
+            System.out.println("======================");
+
+        }
+    }
+  ```
+- 프로퍼티 우선 순위
+  - 1. 유저 홈 디렉토리에 있는 spring-boot-dev-tools.properties
+  - 2. 테스트에 있는 @TestPropertySource
+  - 3. @SpringBootTest 애노테이션의 properties 애트리뷰트
+  - 4. 커맨드 라인 아규먼트
+  - 5. SPRING_APPLICATION_JSON (환경 변수 또는 시스템 프로티) 에 들어있는 프로퍼티
+  - 6. ServletConfig 파라미터
+  - 7. ServletContext 파라미터
+  - 8. java:comp/env JNDI 애트리뷰트
+  - 9. System.getProperties() 자바 시스템 프로퍼티
+  - 10. OS 환경 변수
+  - 11. RandomValuePropertySource
+  - 12. JAR 밖에 있는 특정 프로파일용 application properties
+  - 13. JAR 안에 있는 특정 프로파일용 application properties
+  - 14. JAR 밖에 있는 application properties
+  - 15. JAR 안에 있는 application properties
+  - 16. @PropertySource
+  - 17. 기본 프로퍼티 (SpringApplication.setDefaultProperties)
+  > application.properties 우선 순위 (높은게 낮은걸 덮어 씁니다.)
+
+- 모든 Property들은 Environment 객체를 활용하여 사용할 수 있다.
+- test 실행시 properties 발생현상
+  - src 하위를 빌드한다.
+  - test 하위를 빌드한다.
+  - test/resources/application.properties가 존재한다면 , test/하위에 존재하는 properties로 src의 프로퍼티가 오버라이딩 된다.
+- test용 properties를 사용할때 주의할점
+  - 빌드시 src 디렉터리를 먼저 빌드하고 test 디렉터리를 빌드하는데 src 에 존재하는 properties에는 존재하지만 , test의 properties에는 존재하지않는 프로퍼티가 있고 , 그 값을 참조하는 경우 예     외가 발생한다. 즉, 잠정적 버그를 발생시킬 여지가 있음.
+- properties 파일 내에서 Random값을 사용하는 방법
+  - ${random} 사용
+  - server.port 에는 random을 사용하지 말아야 하는 이유 ?
+  - server.port=0으로 랜덤값 지정(포트번호를 가용가능한 범위 내에서 랜덤값을 부여, random 변수는 그것을 고려하지않은 랜덤값을 부여한다.)
+  ```
+    gimun.age=${random.int}
+    #port랜덤 지정
+    server.port=0
+  ```
+
+- SpringBootTest의 propertie 애트리뷰트를 활용한 방법
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ExternalsettingApplicationTests {
+
+    @Autowired
+    Environment environment;
+
+    @Test
+    public void contextLoads() {
+        assertThat(environment.getProperty("gimun.name")).isEqualTo("gimuntest");
+    }
+
+}
+```
+
+- @TestPropertySource 애노테이션을 활용하는 방법
+- properties 애트리뷰트로 직접 오버라이딩하거나 ,location으로 properties파일을 명시할 수 있다.
+```java
+@RunWith(SpringRunner.class)
+//@TestPropertySource(properties = {"gimun.name=gimuntest","gimun.name=gimuntest"})
+@TestPropertySource(locations = "classpath:/test.properties")
+@SpringBootTest()
+public class ExternalsettingApplicationTests {
+
+    @Autowired
+    Environment environment;
+
+    @Test
+    public void contextLoads() {
+        assertThat(environment.getProperty("gimun.name")).isEqualTo("gimuntest");
+    }
+
+}
+```
+- application.properties 자체의 우선순위
+  - projectRoot/config 하위
+  - projectRoot
+  - classpath:/config 하위
+  - classpath:하위
+  > 위에가 우선순위가 높다.
