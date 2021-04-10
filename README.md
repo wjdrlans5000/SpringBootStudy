@@ -456,6 +456,7 @@ public class Applicaiton {
   - 순서 지정 가능 @Order(숫자가 낮을수록 우선순위)
 
 # Spring boot 활용 - 외부설정
+- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config
 - 사용할 수 있는 외부 설정
   - properties
   - YAML
