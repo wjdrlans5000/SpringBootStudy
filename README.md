@@ -558,8 +558,7 @@ public class ExternalsettingApplicationTests {
 
 }
 ```
-- application.properties 사용시 주의점
-  - classpath 하위에 존재한다면 덮어 쓰기때문에 application.properties를 다른곳에 위치할 수 있다.
+- application.properties 자체의 우선순위
   - projectRoot/config 하위
   - projectRoot
   - classpath:/config 하위
