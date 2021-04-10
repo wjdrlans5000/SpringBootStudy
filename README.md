@@ -512,5 +512,13 @@ public class Applicaiton {
   - test/resources/application.properties가 존재한다면 , test/하위에 존재하는 properties로 src의 프로퍼티가 오버라이딩 된다.
 - test용 properties를 사용할때 주의할점
   - 빌드시 src 디렉터리를 먼저 빌드하고 test 디렉터리를 빌드하는데 src 에 존재하는 properties에는 존재하지만 , test의 properties에는 존재하지않는 프로퍼티가 있고 , 그 값을 참조하는 경우 예     외가 발생한다. 즉, 잠정적 버그를 발생시킬 여지가 있음.
-  - 
+- properties 파일 내에서 Random값을 사용하는 방법
+  - ${random} 사용
+  - server.port 에는 random을 사용하지 말아야 하는 이유 ?
+  - server.port=0으로 랜덤값 지정(포트번호를 가용가능한 범위 내에서 랜덤값을 부여, random 변수는 그것을 고려하지않은 랜덤값을 부여한다.)
+  ```
+    gimun.age=${random.int}
+    #port랜덤 지정
+    server.port=0
+  ```
 
