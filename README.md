@@ -522,3 +522,19 @@ public class Applicaiton {
     server.port=0
   ```
 
+- SpringBootTest의 propertie 애트리뷰트를 활용한 방법
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ExternalsettingApplicationTests {
+
+    @Autowired
+    Environment environment;
+
+    @Test
+    public void contextLoads() {
+        assertThat(environment.getProperty("gimun.name")).isEqualTo("gimuntest");
+    }
+
+}
+```
