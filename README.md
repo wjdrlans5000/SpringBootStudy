@@ -675,4 +675,60 @@ public class JuneYoungProperties {
     }
 }
 ```
+- 프로퍼티 값 검증
+  - 프로퍼티값이 바인딩 될때 검증이 가능하다.
+  - 상단에 @Validated 애노테이션을 선언하고, 검증하고싶은 필드상단에 JSR-303 애노테이션(ex.@NotEmpty) (구현체는 hibernate-validator) 를 활용하여 검증을 할 수 있다.
+  - FailureAnaylizer 가 에러메시지를 보기좋게 포매팅하여 보여준다.
+```java
+@Component
+@ConfigurationProperties("gimun")
+@Validated
+public class GimunProperties {
 
+    @NotEmpty
+    private String name;
+
+    private int age;
+
+    private String fullName;
+
+//    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+
+    public Duration getSessionTimount() {
+        return sessionTimount;
+    }
+
+    public void setSessionTimount(Duration sessionTimount) {
+        this.sessionTimount = sessionTimount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+}
+
+```
+- @Value
+  - SpEL 을 사용할 수 있음.
+  - 아주 정확히 써야함..
