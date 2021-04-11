@@ -565,3 +565,170 @@ public class ExternalsettingApplicationTests {
   - classpath:/config 하위
   - classpath:하위
   > 위에가 우선순위가 높다.
+
+- 타입-세이프 프로퍼티 @ConfigurationProperties
+  - 여러 프로퍼티를 묶어서 읽어올 수 있음
+  - java bean spec을 따라서 프로퍼티값들을  바인딩을 해주기때문에 getter setter가 필요함.
+  - 빈으로 등록해서 다른 빈에 주입할 수 있음 (@Component, @Bean)
+  - @EnableConfigurationProperties
+    - @ConfigurationProperties 를 사용하는 클래스들을 활성화
+    - 이미 활성화 애노테이션으로 등록되어있기 때문에 해당 클래스들을 빈으로 등록해주기만 하면된다.
+    ```java
+      // ConfigurationProperties 애노테이션에 알림이 뜨는경우
+      // 해당 메타정보를 기반으로 자동완성을 제공해주는 플러그인을 추가하라는 알림이므로 pom.xml에 해당 디펜던시 추가
+      @Component
+      @ConfigurationProperties("gimun")
+      public class GimunProperties {
+          String name;
+
+          int age;
+
+          String fullName;
+
+          public String getName() {
+              return name;
+          }
+
+          public void setName(String name) {
+              this.name = name;
+          }
+
+          public int getAge() {
+              return age;
+          }
+
+          public void setAge(int age) {
+              this.age = age;
+          }
+
+          public String getFullName() {
+              return fullName;
+          }
+
+          public void setFullName(String fullName) {
+              this.fullName = fullName;
+          }
+      }
+
+    ```
+- 융통성 있는 바인딩(Relexed Binding)
+  - amel-case로 작성하지않고 , kebab-case(-) or underscore-case(_)로 작성하여도 바인딩을 해준다.
+- Type-Conversion 지원
+  - 스프링 프레임워크가 지원하는 컨버전 서비스를 통해서 타입 컨버전이 일어남.
+- @Duration Unit (스프링부트가 지원하는 컨버전)
+  - 특정 시간단위 로 받고싶을경우 바인딩을 지원한다.
+```java
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+```
+- @Duration 애노테이션을 사용하지않아도 properties에 값을 할당할때 s,ms 등 suffix를 통해 Duration으로 바인딩 할수 있도록 지원한다.
+```
+  gimun.name = gimun
+  gimun.age = ${random.int(1,100}
+  gimun.fullName = ${gimun.name} jeong
+  gimun.sessionTimeout = 25s
+```
+```java
+@Component
+@ConfigurationProperties("gimun")
+public class JuneYoungProperties {
+
+    private String name;
+
+    private int age;
+
+    private String fullName;
+
+//    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+
+    public Duration getSessionTimount() {
+        return sessionTimount;
+    }
+
+    public void setSecound(Duration sessionTimount) {
+        this.sessionTimount = sessionTimount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+}
+```
+- 프로퍼티 값 검증
+  - 프로퍼티값이 바인딩 될때 검증이 가능하다.
+  - 상단에 @Validated 애노테이션을 선언하고, 검증하고싶은 필드상단에 JSR-303 애노테이션(ex.@NotEmpty) (구현체는 hibernate-validator) 를 활용하여 검증을 할 수 있다.
+  - FailureAnaylizer 가 에러메시지를 보기좋게 포매팅하여 보여준다.
+```java
+@Component
+@ConfigurationProperties("gimun")
+@Validated
+public class GimunProperties {
+
+    @NotEmpty
+    private String name;
+
+    private int age;
+
+    private String fullName;
+
+//    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+
+    public Duration getSessionTimount() {
+        return sessionTimount;
+    }
+
+    public void setSessionTimount(Duration sessionTimount) {
+        this.sessionTimount = sessionTimount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+}
+
+```
+- @Value
+  - SpEL 을 사용할 수 있음.
+  - 아주 정확히 써야함..
