@@ -567,4 +567,46 @@ public class ExternalsettingApplicationTests {
   > 위에가 우선순위가 높다.
 
 - 타입-세이프 프로퍼티 @ConfigurationProperties
-  - 
+  - 여러 프로퍼티를 묶어서 읽어올 수 있음
+  - java bean spec을 따라서 프로퍼티값들을  바인딩을 해주기때문에 getter setter가 필요함.
+  - 빈으로 등록해서 다른 빈에 주입할 수 있음
+  - @EnableConfigurationProperties
+    - @ConfigurationProperties 를 사용하는 클래스들을 활성화
+    - 이미 활성화 애노테이션으로 등록되어있기 때문에 해당 클래스들을 빈으로 등록해주기만 하면된다.
+    ```java
+      @Component
+      @ConfigurationProperties("gimun")
+      public class GimunProperties {
+          String name;
+
+          int age;
+
+          String fullName;
+
+          public String getName() {
+              return name;
+          }
+
+          public void setName(String name) {
+              this.name = name;
+          }
+
+          public int getAge() {
+              return age;
+          }
+
+          public void setAge(int age) {
+              this.age = age;
+          }
+
+          public String getFullName() {
+              return fullName;
+          }
+
+          public void setFullName(String fullName) {
+              this.fullName = fullName;
+          }
+      }
+
+    ```
+
