@@ -565,3 +565,6 @@ public class ExternalsettingApplicationTests {
   - classpath:/config 하위
   - classpath:하위
   > 위에가 우선순위가 높다.
+
+- 타입-세이프 프로퍼티 @ConfigurationProperties
+  - 
