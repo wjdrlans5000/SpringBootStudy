@@ -614,4 +614,17 @@ public class ExternalsettingApplicationTests {
 - 융통성 있는 바인딩(Relexed Binding)
   - amel-case로 작성하지않고 , kebab-case(-) or underscore-case(_)로 작성하여도 바인딩을 해준다.
 - Type-Conversion 지원
-  - 
+  - 스프링 프레임워크가 지원하는 컨버전 서비스를 통해서 타입 컨버전이 일어남.
+- @Duration Unit (스프링부트가 지원하는 컨버전)
+  - 특정 시간단위 로 받고싶을경우 바인딩을 지원한다.
+```java
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+```
+- @Duration 애노테이션을 사용하지않아도 properties에 값을 할당할때 s,ms 등 suffix를 통해 Duration으로 바인딩 할수 있도록 지원한다.
+```
+  gimun.name = gimun
+  gimun.age = ${random.int(1,100}
+  gimun.fullName = ${gimun.name} jeong
+  gimun.sessionTimeout = 25s
+```
