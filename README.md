@@ -628,3 +628,51 @@ public class ExternalsettingApplicationTests {
   gimun.fullName = ${gimun.name} jeong
   gimun.sessionTimeout = 25s
 ```
+```java
+@Component
+@ConfigurationProperties("gimun")
+public class JuneYoungProperties {
+
+    private String name;
+
+    private int age;
+
+    private String fullName;
+
+//    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration sessionTimount = Duration.ofSeconds(30);
+
+    public Duration getSessionTimount() {
+        return sessionTimount;
+    }
+
+    public void setSecound(Duration sessionTimount) {
+        this.sessionTimount = sessionTimount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+}
+```
+
