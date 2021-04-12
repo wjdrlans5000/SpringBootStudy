@@ -732,3 +732,10 @@ public class GimunProperties {
 - @Value
   - SpEL 을 사용할 수 있음.
   - 아주 정확히 써야함..
+
+# 스프링 부트 활용 - 프로파일
+- @Profile 애노테이션 - 스프링 프레임워크에서 지원해주는 기능 - 특정 프로파일에서만 빈을 등록하고싶다 .. 등등 에서 활용 - @Configuration - @Component
+- 각 프로파일별로 설정파일 작성
+```java
+
+```
