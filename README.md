@@ -734,8 +734,31 @@ public class GimunProperties {
   - 아주 정확히 써야함..
 
 # 스프링 부트 활용 - 프로파일
-- @Profile 애노테이션 - 스프링 프레임워크에서 지원해주는 기능 - 특정 프로파일에서만 빈을 등록하고싶다 .. 등등 에서 활용 - @Configuration - @Component
+- @Profile 애노테이션 
+  - 스프링 프레임워크에서 지원해주는 기능 
+  - 특정 프로파일에서만(ex.prod) 사용가능
+  - @Configuration, @Component
 - 각 프로파일별로 설정파일 작성
 ```java
+@Profile("prod")
+@Configuration
+public class TestConfiguration {
+
+    @Bean
+    public String hello(){
+        return "hello";
+    }
+}
+
+@Profile("test")
+@Configuration
+public class BaseConfiguration {
+
+    @Bean
+    public String hello(){
+        return "helloTest";
+    }
+}
 
 ```
+- properties 파일에 활성화할 프로파일을 정의
