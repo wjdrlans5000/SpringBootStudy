@@ -732,3 +732,58 @@ public class GimunProperties {
 - @Value
   - SpEL 을 사용할 수 있음.
   - 아주 정확히 써야함..
+
+# 스프링 부트 활용 - 프로파일
+- @Profile 애노테이션 
+  - 스프링 프레임워크에서 지원해주는 기능 
+  - 특정 프로파일에서만(ex.prod) 사용가능
+  - @Configuration, @Component
+- 각 프로파일별로 설정파일 작성
+```java
+@Profile("prod")
+@Configuration
+public class TestConfiguration {
+
+    @Bean
+    public String hello(){
+        return "hello";
+    }
+}
+
+@Profile("test")
+@Configuration
+public class BaseConfiguration {
+
+    @Bean
+    public String hello(){
+        return "helloTest";
+    }
+}
+
+```
+- application.properties 파일에 활성화할 프로파일을 정의
+```
+# 프로파일 활성화
+spring.profiles.active = test
+```
+- profiles도 properties의 우선순위에 영향을 받는다.
+- java -jar 옵션으로 실행시 커맨드라인 아규먼트가 우선순위가 더 높으므로 실행시 profiles을 지정하여 실행이 가능함.
+- IDE의 파라미터 아규먼트에 --spring.profiles.active=prod 설정하여 개발환경에서 profiles 지정하여 실행가능.
+```
+// maven package 
+mvn clean package
+
+// prod 프로파일로 애플리케이션 실행
+jar -jar example.jar --spring.profiles.active=prod  
+```
+- profile용 properties도 생성이 가능하다.
+  - application-{profile}.properties 의 명으로 작성이 가능하다.
+  - profile용 properties파일이 기본 application.properties파일보다 우선순위가 높기때문에 해당하는 profile의 properties로 오버라이딩된다.
+- properties 내에서 특정 프로파일 설정을 포함시키는 방법(인클루드)
+  - spring.profiles.include=프로파일명
+  ```
+  gimun.name = gimun prod
+  # 설정이 읽혀졌을때 추가할 프로파일
+  spring.profiles.include= = proddb
+  ```
+ 
