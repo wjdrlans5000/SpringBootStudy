@@ -15,13 +15,18 @@ public class SpringRunner  implements ApplicationRunner {
 //    @Value("${gimun.age}")
 //    private int age;
 
+    @Autowired
+    private String hello;
+
     //ConfigurationProperties 활용하여 프로퍼티 설정
     @Autowired
-    GimunProperties gimunProperties;
+    private GimunProperties gimunProperties;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("======================");
+        System.out.println(hello);
         System.out.println(gimunProperties.getFullName());
         System.out.println(gimunProperties.getAge());
         System.out.println(gimunProperties.getSessionTimount());
