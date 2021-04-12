@@ -768,7 +768,7 @@ spring.profiles.active = test
 ```
 - profiles도 properties의 우선순위에 영향을 받는다.
 - java -jar 옵션으로 실행시 커맨드라인 아규먼트가 우선순위가 더 높으므로 실행시 profiles을 지정하여 실행이 가능함.
-- 인텔리제이 파라미터 아규먼트에 --spring.profiles.active=prod 설정하여 개발환경에서 profiles 지정하여 실행가능.
+- IDE의 파라미터 아규먼트에 --spring.profiles.active=prod 설정하여 개발환경에서 profiles 지정하여 실행가능.
 ```
 // maven package 
 mvn clean package
