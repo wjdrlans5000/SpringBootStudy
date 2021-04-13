@@ -791,7 +791,8 @@ jar -jar example.jar --spring.profiles.active=prod
 - 스프링부트는 Commons Logging을 사용한다
 - 스프링 코어에서 Commons Logging 에서 사용하기때문에 사용..
 - SLF4J를 사용하려면 의존성 설정을 잘해주어야함 ...
-
+- 스프링5 로거관련 변경사항 : https://docs.spring.io/spring/docs/5.0.0.RC3/spring-framework-reference/overview.html#overview-logging
+- 
 로깅 퍼사드 vs 로거
 - Commons Logging, SLF4j
   - 실제 로깅을 하는 구현체가아니라 추상화 해놓은 API
@@ -816,3 +817,4 @@ jar -jar example.jar --spring.profiles.active=prod
 - 파일출력: logging.file(로그파일) logging.path(디렉터리) 설정
 - 10mb마다 아카이빙됨
 - 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
+- 
