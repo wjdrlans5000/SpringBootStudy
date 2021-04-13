@@ -793,7 +793,7 @@ jar -jar example.jar --spring.profiles.active=prod
 - SLF4J를 사용하려면 의존성 설정을 잘해주어야함 ...
 - 스프링5 로거관련 변경사항 : https://docs.spring.io/spring/docs/5.0.0.RC3/spring-framework-reference/overview.html#overview-logging
 
-## 로깅 퍼사드 vs 로거
+### 로깅 퍼사드 vs 로거
 - Commons Logging, SLF4j(로깅퍼사드)
   - 실제 로깅을 하는 구현체가아니라 추상화 해놓은 API
   - 프레임워크들은 로깅 퍼사드를 이용하여 개발함.
@@ -803,7 +803,7 @@ jar -jar example.jar --spring.profiles.active=prod
   - Commons Logging > SLF4j 로 변경할수 있도록 제공(Commons Logging이 문제가 많아 구조적으로 더 심플하고 안전한 SLF4j 라이브러리가 만들어짐)
   - pom.xml에 exclusion 안해도 됨.(스프링부트 1에서는 SLF4J를 사용하려면 Commons Logging을 exclusion 해야했음) 
  
-## 정리
+### 정리
 - Commons Logging > SLF4j > LogBack
 - 의존성을 보면 spring-boot-starter-web > spring-boot-starter > spring-boot-starte-logging 을 살펴본다.
   - 1. jul-to-slf4j(jul(자바유틸로깅)을 쓰는것은 slf4j로 보내라)
@@ -812,7 +812,7 @@ jar -jar example.jar --spring.profiles.active=prod
   - 4. logback-core (로그백으로 로그를 남김)
 - 스프링부트는 최종적으로 LogBack(로거) 을 사용
 
-## 스프링 부트 로깅
+### 스프링 부트 로깅
 - 기본포맷
   - [날짜] 로깅레벨 PID Thread class..
 - --debug (일부 핵심라이브러리만 디버깅모드)
@@ -822,5 +822,5 @@ jar -jar example.jar --spring.profiles.active=prod
   - 10mb마다 아카이빙됨(설정가능)
 - 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
 
-커스텀 로그파일
+### 커스텀 로그파일
 - 
