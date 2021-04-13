@@ -792,21 +792,25 @@ jar -jar example.jar --spring.profiles.active=prod
 - 스프링 코어에서 Commons Logging 에서 사용하기때문에 사용..(스프링코어가 만들어질 당시 SLF4J가 없었음)
 - SLF4J를 사용하려면 의존성 설정을 잘해주어야함 ...
 - 스프링5 로거관련 변경사항 : https://docs.spring.io/spring/docs/5.0.0.RC3/spring-framework-reference/overview.html#overview-logging
-- 
+
 로깅 퍼사드 vs 로거
 - Commons Logging, SLF4j(로깅퍼사드)
   - 실제 로깅을 하는 구현체가아니라 추상화 해놓은 API
   - 프레임워크들은 로깅 퍼사드를 이용하여 개발함.
   - 로깅퍼사드의 장점은 로깅퍼사드 밑에 로거(실제 구현체)들을 교체 할 수 있음(자신들이 원하는 로거를 쓸수 있도록)
   - JUL, LOG4J2, LogBack (로거) 등으로 원하는 실제 구현체로 교체하여 사용
-- Spring-JCL (스프링 5)
+- Spring-JCL(Jakarta Common Logging) (스프링 5에서 만든 모듈로 컴파일시점에 SLF4J나 LOG4J2로 변경할수 있는 인터페이스)
   - Commons Logging > SLF4j 로 변경할수 있도록 제공(Commons Logging이 문제가 많아 구조적으로 더 심플하고 안전한 SLF4j 라이브러리가 만들어짐)
   - pom.xml에 exclusion 안해도 됨.(스프링부트 1에서는 SLF4J를 사용하려면 Commons Logging을 exclusion 해야했음) 
-  - 
+ 
 정리
 - Commons Logging > SLF4j > LogBack
-- 
-- 스프링부트는 최종적으로 LogBack 을 사용
+- 의존성을 보면 spring-boot-starter-web > spring-boot-starter > spring-boot-starte-logging 을 살펴본다.
+  - 1.jul-to-slf4j(jul(자바유틸로깅)을 쓰는것은 slf4j로 보내라)
+  - 2.log4j-to-slf4j(log4j를 쓰는코드도 slf4j로)
+  - 3.slf4j-api (slf4j로 받고)
+  - 4.logback-core (로그백으로 로그를 남김)
+- 스프링부트는 최종적으로 LogBack(로거) 을 사용
 
 스프링 부트 로깅
 - 기본포맷
