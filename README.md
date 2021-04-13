@@ -787,3 +787,5 @@ jar -jar example.jar --spring.profiles.active=prod
   spring.profiles.include= = proddb
   ```
  
+# Spring boot 활용 - 로깅
+- 
