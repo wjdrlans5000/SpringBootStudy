@@ -787,3 +787,72 @@ jar -jar example.jar --spring.profiles.active=prod
   spring.profiles.include= = proddb
   ```
  
+# Spring boot 활용 - 로깅
+- 스프링부트는 Commons Logging을 사용한다
+- 스프링 코어에서 Commons Logging 에서 사용하기때문에 사용..(스프링코어가 만들어질 당시 SLF4J가 없었음)
+- SLF4J를 사용하려면 의존성 설정을 잘해주어야함 ...
+- 스프링5 로거관련 변경사항 : https://docs.spring.io/spring/docs/5.0.0.RC3/spring-framework-reference/overview.html#overview-logging
+
+### 로깅 퍼사드 vs 로거
+- Commons Logging, SLF4j(로깅퍼사드)
+  - 실제 로깅을 하는 구현체가아니라 추상화 해놓은 API
+  - 프레임워크들은 로깅 퍼사드를 이용하여 개발함.
+  - 로깅퍼사드의 장점은 로깅퍼사드 밑에 로거(실제 구현체)들을 교체 할 수 있음(자신들이 원하는 로거를 쓸수 있도록)
+  - JUL, LOG4J2, LogBack (로거) 등으로 원하는 실제 구현체로 교체하여 사용
+- Spring-JCL(Jakarta Common Logging) (스프링 5에서 만든 모듈로 컴파일시점에 SLF4J나 LOG4J2로 변경할수 있는 인터페이스)
+  - Commons Logging > SLF4j 로 변경할수 있도록 제공(Commons Logging이 문제가 많아 구조적으로 더 심플하고 안전한 SLF4j 라이브러리가 만들어짐)
+  - pom.xml에 exclusion 안해도 됨.(스프링부트 1에서는 SLF4J를 사용하려면 Commons Logging을 exclusion 해야했음) 
+ 
+### 정리
+- Commons Logging > SLF4j > LogBack
+- 의존성을 보면 spring-boot-starter-web > spring-boot-starter > spring-boot-starte-logging 을 살펴본다.
+  - 1. jul-to-slf4j(jul(자바유틸로깅)을 쓰는것은 slf4j로 보내라)
+  - 2. log4j-to-slf4j(log4j를 쓰는코드도 slf4j로)
+  - 3. slf4j-api (slf4j로 받고)
+  - 4. logback-core (로그백으로 로그를 남김)
+- 스프링부트는 최종적으로 LogBack(로거) 을 사용
+
+### 스프링 부트 로깅
+- 기본포맷
+  - [날짜] 로깅레벨 PID Thread class..
+- --debug (일부 핵심라이브러리만 디버깅모드)
+- --trace (모든 로깅을 디버그모드로 ..)
+- 컬러출력: spring.output.ansi.enabled
+- 파일출력: logging.file(로그파일) logging.path(디렉터리) 설정
+  - 10mb마다 아카이빙됨(설정가능)
+- 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
+
+### 커스텀 로그파일
+- https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html
+- Logback: logback.xml || logback-spring.xml(추천! 스프링부트에서 지원하는 extension을 사용가능함.)
+- Log4j2: log4j2-spring.xml
+- JUL(비추): logging.properties
+- Logback extension
+  - 프로파일 특정 프로파일별로 설정이 가능함.
+  - Environment 프로퍼티
+
+### 로거를 Log4j2로 변경하기
+- https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html#howto-configure-log4j-for-logging
+- spring-boot-starter-web 에 포함된 spring-boot-starter-logging 의존성 제거
+- spring-boot-starter-log4j2의존성 추가
+```xml
+<!--   스프링부트 웹 의존성  -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+<!--     로거를 log4j2로 변경-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+```
+
