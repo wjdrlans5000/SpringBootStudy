@@ -798,4 +798,9 @@ jar -jar example.jar --spring.profiles.active=prod
   - 프레임워크들은 로깅 퍼사드를 이용하여 개발함.
   - 로깅퍼사드는 실제 구현체들을 교체 할 수 있음
   - JUL, LOG4J2, LogBack 등으로 원하는 실제 구현체로 교체하여 사용
-
+- Spring-JCL (스프링 5)
+  - Commons Logging > SLF4j 로 변경할수 있도록 제공
+  - pom.xml에 exclusion 안해도 됨.
+- 정리
+  - Commons Logging > SLF4j > LogBack
+  - 스프링부트는 최종적으로 LogBack 을 사용
