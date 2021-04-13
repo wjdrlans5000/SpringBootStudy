@@ -806,10 +806,10 @@ jar -jar example.jar --spring.profiles.active=prod
 정리
 - Commons Logging > SLF4j > LogBack
 - 의존성을 보면 spring-boot-starter-web > spring-boot-starter > spring-boot-starte-logging 을 살펴본다.
-  - 1.jul-to-slf4j(jul(자바유틸로깅)을 쓰는것은 slf4j로 보내라)
-  - 2.log4j-to-slf4j(log4j를 쓰는코드도 slf4j로)
-  - 3.slf4j-api (slf4j로 받고)
-  - 4.logback-core (로그백으로 로그를 남김)
+  - 1. jul-to-slf4j(jul(자바유틸로깅)을 쓰는것은 slf4j로 보내라)
+  - 2. log4j-to-slf4j(log4j를 쓰는코드도 slf4j로)
+  - 3. slf4j-api (slf4j로 받고)
+  - 4. logback-core (로그백으로 로그를 남김)
 - 스프링부트는 최종적으로 LogBack(로거) 을 사용
 
 스프링 부트 로깅
@@ -819,6 +819,6 @@ jar -jar example.jar --spring.profiles.active=prod
 - --trace (모든 로깅을 디버그모드로 ..)
 - 컬러출력: spring.output.ansi.enabled
 - 파일출력: logging.file(로그파일) logging.path(디렉터리) 설정
-- 10mb마다 아카이빙됨
+  - 10mb마다 아카이빙됨(설정가능)
 - 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
-- 
+
