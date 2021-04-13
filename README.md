@@ -788,4 +788,14 @@ jar -jar example.jar --spring.profiles.active=prod
   ```
  
 # Spring boot 활용 - 로깅
-- 
+- 스프링부트는 Commons Logging을 사용한다
+- 스프링 코어에서 Commons Logging 에서 사용하기때문에 사용..
+- SLF4J를 사용하려면 의존성 설정을 잘해주어야함 ...
+
+로깅 퍼사드 vs 로거
+- Commons Logging, SLF4j
+  - 실제 로깅을 하는 구현체가아니라 추상화 해놓은 API
+  - 프레임워크들은 로깅 퍼사드를 이용하여 개발함.
+  - 로깅퍼사드는 실제 구현체들을 교체 할 수 있음
+  - JUL, LOG4J2, LogBack 등으로 원하는 실제 구현체로 교체하여 사용
+
