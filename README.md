@@ -823,4 +823,14 @@ jar -jar example.jar --spring.profiles.active=prod
 - 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
 
 ### 커스텀 로그파일
+- https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html
+- Logback: logback.xml || logback-spring.xml(추천! 스프링부트에서 지원하는 extension을 사용가능함.)
+- Log4j2: log4j2-spring.xml
+- JUL(비추): logging.properties
+- Logback extension
+  - 프로파일 특정 프로파일별로 설정이 가능함.
+  - Environment 프로퍼티
+
+### 로거를 Log4j2로 변경하기
 - 
+
