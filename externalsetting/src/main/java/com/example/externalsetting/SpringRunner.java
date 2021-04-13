@@ -1,5 +1,7 @@
 package com.example.externalsetting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -14,6 +16,7 @@ public class SpringRunner  implements ApplicationRunner {
 //
 //    @Value("${gimun.age}")
 //    private int age;
+    private Logger logger = LoggerFactory.getLogger(SpringRunner.class);
 
     @Autowired
     private String hello;
@@ -25,6 +28,13 @@ public class SpringRunner  implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        logger.debug("===================");
+        logger.debug(hello);
+        logger.debug(gimunProperties.getName());
+        logger.debug(gimunProperties.getFullName());
+        logger.debug("===================");
+
+
         System.out.println("======================");
         System.out.println(hello);
         System.out.println(gimunProperties.getFullName());
