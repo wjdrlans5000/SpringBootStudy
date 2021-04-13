@@ -812,7 +812,7 @@ jar -jar example.jar --spring.profiles.active=prod
   - 4. logback-core (로그백으로 로그를 남김)
 - 스프링부트는 최종적으로 LogBack(로거) 을 사용
 
-스프링 부트 로깅
+##스프링 부트 로깅
 - 기본포맷
   - [날짜] 로깅레벨 PID Thread class..
 - --debug (일부 핵심라이브러리만 디버깅모드)
@@ -822,3 +822,5 @@ jar -jar example.jar --spring.profiles.active=prod
   - 10mb마다 아카이빙됨(설정가능)
 - 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
 
+커스텀 로그파일
+- 
