@@ -832,5 +832,27 @@ jar -jar example.jar --spring.profiles.active=prod
   - Environment 프로퍼티
 
 ### 로거를 Log4j2로 변경하기
-- 
+- https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html#howto-configure-log4j-for-logging
+- spring-boot-starter-web 에 포함된 spring-boot-starter-logging 의존성 제거
+- spring-boot-starter-log4j2의존성 추가
+```xml
+<!--   스프링부트 웹 의존성  -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+<!--     로거를 log4j2로 변경-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+```
 
