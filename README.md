@@ -801,6 +801,18 @@ jar -jar example.jar --spring.profiles.active=prod
 - Spring-JCL (스프링 5)
   - Commons Logging > SLF4j 로 변경할수 있도록 제공
   - pom.xml에 exclusion 안해도 됨.
-- 정리
-  - Commons Logging > SLF4j > LogBack
-  - 스프링부트는 최종적으로 LogBack 을 사용
+  - 
+정리
+- Commons Logging > SLF4j > LogBack
+- 
+- 스프링부트는 최종적으로 LogBack 을 사용
+
+스프링 부트 로깅
+- 기본포맷
+  - [날짜] 로깅레벨 PID Thread class..
+- --debug (일부 핵심라이브러리만 디버깅모드)
+- --trace (모든 로깅을 디버그모드로 ..)
+- 컬러출력: spring.output.ansi.enabled
+- 파일출력: logging.file(로그파일) logging.path(디렉터리) 설정
+- 10mb마다 아카이빙됨
+- 로그레벨: logging.level.packagename=LOGGING_LEVEL (패키지별로 로깅레벨 설정)
