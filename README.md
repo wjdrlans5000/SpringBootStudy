@@ -857,4 +857,11 @@ jar -jar example.jar --spring.profiles.active=prod
 ```
 
 # SpringBoot 활용 - 테스트
--
+- spring-boot-starter-test를 추가
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+```
