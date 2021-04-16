@@ -856,3 +856,5 @@ jar -jar example.jar --spring.profiles.active=prod
         </dependency>
 ```
 
+# SpringBoot 활용 - 테스트
+-
