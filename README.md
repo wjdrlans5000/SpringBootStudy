@@ -865,3 +865,7 @@ jar -jar example.jar --spring.profiles.active=prod
             <scope>test</scope>
         </dependency>
 ```
+- junit, mockito, assertj 등 여러 의존성들이 추가된다.
+- intellij test case, test method 생성 단축키
+  - 클래스명에 마우스 위치후 alt + enter ==> Test Case 생성
+  - Test Case 소스 상에서 alt + insert ==> Test Method 생성
