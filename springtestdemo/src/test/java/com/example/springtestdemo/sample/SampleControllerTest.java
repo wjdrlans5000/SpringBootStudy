@@ -1,17 +1,20 @@
 package com.example.springtestdemo.sample;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -30,6 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 // MockMvc 를 Autowired를 통해 주입받을수있음.
 //@AutoConfigureMockMvc
 public class SampleControllerTest {
+
+    @Rule
+    public OutputCapture outputCapture = new OutputCapture();
 
 //    @Autowired
 //    MockMvc mockMvc;
@@ -60,7 +66,6 @@ public class SampleControllerTest {
 //                .andDo(print()); // print 를통해 요청과 응답에 대한 정보를 콘솔로 확인가능하다.
 
 
-
         // sampleService의 리턴값을 mocking
 //        when(sampleService.getName()).thenReturn("gimun");
 
@@ -70,5 +75,11 @@ public class SampleControllerTest {
         webTestClient.get().uri("/hello").exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class).isEqualTo("hello gimun");
+
+        //toString 으로 나오는 내용들을 assertion
+        //log나 sys out도 테스트 가능
+//        assertThat(outputCapture.toString())
+//                .contains("holoman")
+//                .contains("skip");
     }
 }
