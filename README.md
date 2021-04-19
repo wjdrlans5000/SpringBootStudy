@@ -990,3 +990,50 @@ public OutputCapture outputCapture = new OutputCapture();
                 .contains("holoman")
                 .contains("skip");
 ```
+
+# Spring Boot 활용 - dev-tools
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
+- optional한 툴
+- 캐시 설정을 개발환경에 맞게 변경해준다.
+- 기본적으로 대부분 캐시관련 설정을 disable 시켜준다.
+- 클래스패스에 존재하는 파일이 변경될때마다 자동응로 restart해준다.
+    - 직접 재시작보다 빠르다 
+        - 왜 ?
+            - 스프링부트는 클래스로더를 2개 사용한다.
+            - 1. BaseClassLoader (의존성을 읽어들임)
+            - 2. RestartClassLoader클래스로더 (애플리케이션 코드를 읽어들임)
+    - 릴로딩 보다 는 느리다.(JRebel같은것은 아니다.)
+    - 리스타트하고싶지않은 리소스 추가
+        - spring.devtools.restart.exclude
+    - 리스타트 기능 off
+        - spring.devtools.restart.enabled=false
+- 라이브 릴로딩? ? 리스타트 했을 때 브라우저 자동 리프레시 하는 기능
+    - 브라우저 플러그인을 설치해야한다.
+    - 라이브 릴로딩 off 
+        - spring.devtools.liveload.enabled=false
+- 글로벌 설정
+    - ~/.spring-boot-devtools.properties (1순위 외부설정파일의 위치 dev-tools (플러그인 의존성이 있을경우))
+
+# Spring Boot - Web Mvc
+- Spring Boot MVC 자동설정
+    - Spring Boot 의 자동설정 에 의해 별다른 설정없이도 MVC 개발이 가능하다.
+    - spring.factories > WebMvcAutoConfiguration class (자동설정 파일)
+
+* HiddenHttpMethodFilter 
+    - spring 3.0 부터 제공하는 filter
+    - post 방식의 요청 파라메터로 _method 라는 값에 PUT,DELETE 등을 보내면
+    - PUT , DELETE 등의 요청으로 매핑시켜주는 Filter 
+* PutFormContentFilter
+    - PUT , PATCH 도 contentType 이 form-data의 파라메터를 사용할수있도록 매핑해주는 Filter    
+
+- MVC 설정 확장 (기본설정 +@)
+    - @Configuration + WebMvcConfigurer
+
+- MVC 재정의 (기본설정 덮어쓰기)
+    - @Configuration + @EnableWebMvc
+- https://docs.spring.io/spring/docs/5.0.7.RELEASE/spring-framework-reference/web.html#spring-web
