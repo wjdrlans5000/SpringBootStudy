@@ -1037,3 +1037,8 @@ public OutputCapture outputCapture = new OutputCapture();
 - MVC 재정의 (기본설정 덮어쓰기)
     - @Configuration + @EnableWebMvc
 - https://docs.spring.io/spring/docs/5.0.7.RELEASE/spring-framework-reference/web.html#spring-web
+
+# Spring Boot - HttpMessageConverter
+- 스프링 프레임워크에서 지원하는 인터페이스로 HTTP 응답 본문을 객체로 변환하거나 , 객체를 응답본문으로 변환할때 사용한다.
+- @RequestBody 또는 @ResponseBody와 함께 사용한다.
+- 
