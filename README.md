@@ -1047,4 +1047,4 @@ public OutputCapture outputCapture = new OutputCapture();
     - String 일경우 StringMessageConverter를 사용한다.
 - @RestController 일경우 모든 핸들러 메서드에 @ResponseBody 생략해도됨(@ResponseBody가 적용되어있는것과 동일)
 - @RestController, @ResponseBody를 사용하지않을경우 ViewNameResolver를 사용해서 view를 찾으려고 할것이다.
-
+- https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/spring-framework-reference/web.html#mvc-config-message-converters
