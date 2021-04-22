@@ -1047,4 +1047,67 @@ public OutputCapture outputCapture = new OutputCapture();
     - String 일경우 StringMessageConverter를 사용한다.
 - @RestController 일경우 모든 핸들러 메서드에 @ResponseBody 생략해도됨(@ResponseBody가 적용되어있는것과 동일)
 - @RestController, @ResponseBody를 사용하지않을경우 ViewNameResolver를 사용해서 view를 찾으려고 할것이다.
+- https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/spring-framework-reference/web.html#mvc-config-message-converters
+
+# Spring Boot - ViewResolver
+- 스프링부트가 제공하는 ContentsNegotiationViewResolver
+  - 요청의 accpet Header에 따라 응답이 달라진다. (accpet Header: 클라이언트가 원하는 응답의 형식)
+  - 어떠한 요청이들어오면 그 요청의 응답을 만들수있는 모든 뷰를 다 찾아냄
+  - 최종적으로 accept 헤더와 뷰의 타입을 비교하여 선택함
+  - accpetHeader 를 제공하지않는 클라이언트도 존재하는데 그럴경우 foramt이라는 매개변수를 사용한다.
+    - /path?format=XML
+
+- json 요청을 XML 로 응답받는 테스트코드
+```java
+    @Test
+    public void createUser_JSON() throws Exception {
+        String userJson = "{\"username\":\"gimun\",\"password\":\"123\"}";
+        mockMvc.perform(post("/users/create")
+                .contentType(MediaType.APPLICATION_JSON) // 요청
+                .accept(MediaType.APPLICATION_XML) //응답
+                .content(userJson))
+                .andExpect(status().isOk())
+                .andExpect((ResultMatcher) xpath("/User/name").string("gimun"))
+                .andExpect((ResultMatcher) xpath("/User/password").string("1234"));
+    }
+```
+- HttpMediaTypeNotAcceptableException 예외 발생
+  - AcceptHeader를 요청과 함께 보내면 accpetHeader에 따라 MesageConverter를 다르게 사용하는데 XML MessageConverter가 등록되지않아 발생한 에러이다.
+  - HttpMessageConvertersAutoConfiguration : HttpMessageConverter를 사용하는 설정을 자동설정해주는 빈
+  ```java
+    @Configuration(
+      proxyBeanMethods = false
+  )
+  class JacksonHttpMessageConvertersConfiguration {
+      JacksonHttpMessageConvertersConfiguration() {
+      }
+
+      @Configuration(
+          proxyBeanMethods = false
+      )
+      @ConditionalOnClass({XmlMapper.class})
+      @ConditionalOnBean({Jackson2ObjectMapperBuilder.class})
+      protected static class MappingJackson2XmlHttpMessageConverterConfiguration {
+          protected MappingJackson2XmlHttpMessageConverterConfiguration() {
+          }
+
+          @Bean
+          @ConditionalOnMissingBean
+          public MappingJackson2XmlHttpMessageConverter mappingJackson2XmlHttpMessageConverter(Jackson2ObjectMapperBuilder builder) {
+              return new MappingJackson2XmlHttpMessageConverter(builder.createXmlMapper(true).build());
+          }
+      }
+  ```
+  - HttpMessageConvertersAutoConfiguration.class > JacksonHttpMessageConvertersConfiguration.class
+    - MappingJackson2XmlHttpMessageConverterConfiguration 처럼 xml을 컨버팅해주는 MessageConverter가 등록되는데 XmlMapper.class가 클래스패스에 있을때만 등록이 되도록 설정되어있음 
+    - 현재는 XML 메시지를 컨버팅할수있는 Converter가 없는 상태.
+    - XML 메시지 컨버터 의존성 추가
+  ```xml
+     <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>2.9.6</version>
+     </dependency>
+  ```
+
 
