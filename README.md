@@ -1056,3 +1056,18 @@ public OutputCapture outputCapture = new OutputCapture();
   - 최종적으로 accept 헤더와 뷰의 타입을 비교하여 선택함
   - accpetHeader 를 제공하지않는 클라이언트도 존재하는데 그럴경우 foramt이라는 매개변수를 사용한다.
     - /path?format=XML
+
+> json 요청을 XML 로 응답받는 테스트코드
+```java
+    @Test
+    public void createUser_JSON() throws Exception {
+        String userJson = "{\"username\":\"gimun\",\"password\":\"123\"}";
+        mockMvc.perform(post("/users/create")
+                .contentType(MediaType.APPLICATION_JSON) // 요청
+                .accept(MediaType.APPLICATION_XML) //응답
+                .content(userJson))
+                .andExpect(status().isOk())
+                .andExpect((ResultMatcher) xpath("/User/name").string("gimun"))
+                .andExpect((ResultMatcher) xpath("/User/password").string("1234"));
+    }
+```
