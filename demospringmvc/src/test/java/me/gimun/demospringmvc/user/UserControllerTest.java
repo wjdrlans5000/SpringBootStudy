@@ -14,8 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -35,12 +34,12 @@ public class UserControllerTest {
     public void createUser_JSON() throws Exception {
         String userJson = "{\"username\":\"gimun\",\"password\":\"123\"}";
         mockMvc.perform(post("/users/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON) // 요청
+                .accept(MediaType.APPLICATION_XML) //응답
                 .content(userJson))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.username", is(equalTo("gimun"))))
-                .andExpect((ResultMatcher) jsonPath("$.password", is(equalTo("1234"))));
+                .andExpect((ResultMatcher) xpath("/User/username").string("gimun"))
+                .andExpect((ResultMatcher) xpath("/User/password").string("123"));
     }
 
 }
