@@ -1057,7 +1057,7 @@ public OutputCapture outputCapture = new OutputCapture();
   - accpetHeader 를 제공하지않는 클라이언트도 존재하는데 그럴경우 foramt이라는 매개변수를 사용한다.
     - /path?format=XML
 
-> json 요청을 XML 로 응답받는 테스트코드
+- json 요청을 XML 로 응답받는 테스트코드
 ```java
     @Test
     public void createUser_JSON() throws Exception {
@@ -1071,3 +1071,43 @@ public OutputCapture outputCapture = new OutputCapture();
                 .andExpect((ResultMatcher) xpath("/User/password").string("1234"));
     }
 ```
+- HttpMediaTypeNotAcceptableException 예외 발생
+  - AcceptHeader를 요청과 함께 보내면 accpetHeader에 따라 MesageConverter를 다르게 사용하는데 XML MessageConverter가 등록되지않아 발생한 에러이다.
+  - HttpMessageConvertersAutoConfiguration : HttpMessageConverter를 사용하는 설정을 자동설정해주는 빈
+  ```java
+    @Configuration(
+      proxyBeanMethods = false
+  )
+  class JacksonHttpMessageConvertersConfiguration {
+      JacksonHttpMessageConvertersConfiguration() {
+      }
+
+      @Configuration(
+          proxyBeanMethods = false
+      )
+      @ConditionalOnClass({XmlMapper.class})
+      @ConditionalOnBean({Jackson2ObjectMapperBuilder.class})
+      protected static class MappingJackson2XmlHttpMessageConverterConfiguration {
+          protected MappingJackson2XmlHttpMessageConverterConfiguration() {
+          }
+
+          @Bean
+          @ConditionalOnMissingBean
+          public MappingJackson2XmlHttpMessageConverter mappingJackson2XmlHttpMessageConverter(Jackson2ObjectMapperBuilder builder) {
+              return new MappingJackson2XmlHttpMessageConverter(builder.createXmlMapper(true).build());
+          }
+      }
+  ```
+  - HttpMessageConvertersAutoConfiguration.class > JacksonHttpMessageConvertersConfiguration.class
+    - MappingJackson2XmlHttpMessageConverterConfiguration 처럼 xml을 컨버팅해주는 MessageConverter가 등록되는데 XmlMapper.class가 클래스패스에 있을때만 등록이 되도록 설정되어있음 
+    - 현재는 XML 메시지를 컨버팅할수있는 Converter가 없는 상태.
+    - XML 메시지 컨버터 의존성 추가
+```xml
+     <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>2.9.6</version>
+     </dependency>
+```
+
+
