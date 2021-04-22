@@ -1102,12 +1102,12 @@ public OutputCapture outputCapture = new OutputCapture();
     - MappingJackson2XmlHttpMessageConverterConfiguration 처럼 xml을 컨버팅해주는 MessageConverter가 등록되는데 XmlMapper.class가 클래스패스에 있을때만 등록이 되도록 설정되어있음 
     - 현재는 XML 메시지를 컨버팅할수있는 Converter가 없는 상태.
     - XML 메시지 컨버터 의존성 추가
-```xml
+  ```xml
      <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>
       <version>2.9.6</version>
      </dependency>
-```
+  ```
 
 
