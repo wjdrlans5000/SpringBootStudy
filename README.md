@@ -1133,6 +1133,7 @@ public OutputCapture outputCapture = new OutputCapture();
   - 요청헤더의 If-Modified-Since 정보를 보고 If-Modified-Since 시간 이후에 바뀌었을 경우 새로 달라고 요청(200응답을 보냄)
   - 즉, LastModified 헤더 정보를 기반으로 caching된 데이터를 응답함.
 - 리소스 찾을 위치 변경할 경우 리소스 핸들러를 추가하는 방식 추천(스프링부트가 지원하는 기본 방식을 유지하면서 새로운 리소스 맵핑설정 변경)
+  - caching 전략을 따로 설정해주어야 함. 
 ```java
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
