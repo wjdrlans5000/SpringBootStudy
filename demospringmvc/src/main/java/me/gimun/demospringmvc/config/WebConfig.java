@@ -2,6 +2,7 @@ package me.gimun.demospringmvc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /*
@@ -10,7 +11,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 * 직접 설정 해야함
  */
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
+    /*
+     * 리소스 핸들러를 추가
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/m/**")
+                .addResourceLocations("classpath:/m/") // 반드시 /로 끝나야함 안그러면 맵핑이 잘 안됨.
+                .setCachePeriod(20);
+    }
 }
