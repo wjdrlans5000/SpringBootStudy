@@ -1110,4 +1110,25 @@ public OutputCapture outputCapture = new OutputCapture();
      </dependency>
   ```
 
+# Spring boot WebMvc - 정적 리소스 지원
+- 정적 리소스란 ? 
+   - resource가 이미 만들어져있고 그대로 응답으로 보내면 되는 리소스를 말한다.
+   - js, html , css .. 등 
+- 정적 리소스 매핑 /**
+    - 아래의 4가지 클래스패스 경로에 존재하는 리소스들은 기본적으로 제공됨.
+    - classpath:/static
+    - classapth:/public
+    - classapth:/resources/
+    - classapth:/META-INF/resources/
+    - 예) “/hello.html” => /static/hello.html
+    - spring.mvc.static-path-pattern: 매핑설정 변경
+    - spring.mvc.static-locations: 리소스를 찾을 위치 변경가능
 
+- http://localhost:8080/hello.html 로 요청을 보내면
+- ResourceHttpRequestHandler 가 위 요청을 처리한다.
+- LastModified 헤더 정보를 보고 304 응답을 보내기도한다.
+  - 브라우저에서 해당 리소스가 언제 바뀌었는지 알고있음.
+  - LastModified 정보가 바뀌지 않았을 경우 (If-Modified-Since == LastModified) 304 응답을 보내면서 해당 리소스를 다시 보내지는 않음.(훨씬 응답이 빨라짐)
+  - 요청헤더의 If-Modified-Since 정보를 보고 If-Modified-Since 시간 이후에 바뀌었을 경우 새로 달라고 요청(200응답을 보냄)
+  - 즉, LastModified 헤더 정보를 기반으로 caching된 데이터를 응답함.
+> static,public,resources .. 하위에 hello.html이 존재할경우 해당파일을 응답으로 재공한다.
