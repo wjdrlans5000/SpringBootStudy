@@ -1186,3 +1186,13 @@ public class WebConfig implements WebMvcConfigurer {
     })
 </script>
 ```
+# Spring Boot WebMvc - index page , favicon
+- 웰컴 페이지
+  - index.html 찾아 보고 있으면 제공.
+  - index.템플릿 찾아 보고 있으면 제공.
+  - 둘 다 없으면 에러 페이지.
+- 파비콘
+  - favicon.ico
+  - 파이콘 만들기 https://favicon.io/
+  - 파비콘이 안 바뀔 때?
+    - https://stackoverflow.com/questions/2208933/how-do-i-force-a-favicon-refresh
