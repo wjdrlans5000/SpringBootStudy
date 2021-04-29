@@ -1206,7 +1206,60 @@ public class WebConfig implements WebMvcConfigurer {
   - Thymeleaf
   - Mustache
 - JSP 권장하지 않는 이유
-    - JAR 패키징할때는 동작하지않고, WAR패키징 해야 함.
-    - Undertow는 JSP를 지원하지않음.
-    - https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-jsp-limitations
-  
+  - JAR 패키징할때는 동작하지않고, WAR패키징 해야 함.
+  - Undertow는 JSP를 지원하지않음.
+  - https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-jsp-limitations
+- Thymeleaf 사용하기
+  - https://thymeleaf.org
+  - https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html
+  - 의존성 추가 : spring-boot-starter-thymeleaf
+  - 템플릿 파일 위치:/src/main/resources/template  
+  - 예제 : https://github.com/thymeleaf/thymeleafexamples-stsm/blob/3.0-master/src/main/webapp/WEB-INF/templates/seedstartermng.html
+- Thymeleaf 테스트
+```java
+@Controller
+public class SampleController {
+
+    @GetMapping("/hellogimun")
+    public String hello(Model model){
+        model.addAttribute("name","gimun");
+        return "hellogimun";
+    }
+}
+```
+```java
+@RunWith(SpringRunner.class)
+@WebMvcTest(SampleController.class)
+public class SampleControllerTest {
+
+    @Autowired
+    MockMvc mockMvc; //가짜 서블릿 컨테이너
+
+    @Test
+    public void hello() throws Exception {
+        //요청 "/hellogimun"
+        //응답
+        // - 모델 name : gimun
+        // - 뷰 이름 : hellogimun
+        mockMvc.perform(get("/hellogimun"))
+                .andExpect(status().isOk())
+                .andDo(print())  // 렌더링되는 결과를 print -> 타임리프를 사용하여 가능한것임 jsp는 실제 렌더링된 결과를 확인하기 힘듬
+                .andExpect(view().name("hellogimun"))
+                .andExpect(model().attribute("name","gimun"))
+                .andExpect(content().string(containsString("gimun"))); // 본문 내용 테스트
+    }
+}
+```
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${name}"> </h1>
+</body>
+</html>
+```
+
