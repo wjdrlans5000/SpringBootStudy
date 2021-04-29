@@ -1196,3 +1196,17 @@ public class WebConfig implements WebMvcConfigurer {
   - 파이콘 만들기 https://favicon.io/
   - 파비콘이 안 바뀔 때?
     - https://stackoverflow.com/questions/2208933/how-do-i-force-a-favicon-refresh
+    
+# Spring Boot WebMvc - Thymeleaf
+- 템플릿엔진
+  - 주로 뷰를 만드는데 사용, 이메일 템플릿용도 등으로 사용
+- 스프링 부트가 자동 설정을 지원하는 템플릿 엔진
+  - FreeMarker
+  - Groovy
+  - Thymeleaf
+  - Mustache
+- JSP 권장하지 않는 이유
+    - JAR 패키징할때는 동작하지않고, WAR패키징 해야 함.
+    - Undertow는 JSP를 지원하지않음.
+    - https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-jsp-limitations
+  
