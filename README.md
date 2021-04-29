@@ -1148,3 +1148,51 @@ public class WebConfig implements WebMvcConfigurer {
     }
 }
 ```
+# Spring boot WebMvc - WebJar
+- 스프링부트는  WebJar에 대한 기본 매핑을 제공한다.
+- WebJar란 ? 
+  - 클라이언트에서 사용하는 js 라이브러리들 을 jar파일로 추가하여 사용할수있다. ex)jquery,react,vue
+> jQuery webJar 의존성추가
+```xml
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+```
+> webjar 사용
+```html
+<script src="/webjars/jquery/3.5.1/dist/jquery.min.js"></script>
+<script>
+    $(function(){
+        alert("ready");
+    })
+</script>
+```
+- webjar locator core 를 의존성으로 추가하면 webjar의 버전을 생략할 수 있다.
+> - resource Chaining 과 관련되어있음.(스프링프레임웤에 들어간 기능)
+```xml
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>webjars-locator-core</artifactId>
+    <version>0.37</version>
+</dependency>
+```
+```html
+<script src="/webjars/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function(){
+        alert("ready");
+    })
+</script>
+```
+# Spring Boot WebMvc - index page , favicon
+- 웰컴 페이지
+  - index.html 찾아 보고 있으면 제공.
+  - index.템플릿 찾아 보고 있으면 제공.
+  - 둘 다 없으면 에러 페이지.
+- 파비콘
+  - favicon.ico
+  - 파이콘 만들기 https://favicon.io/
+  - 파비콘이 안 바뀔 때?
+    - https://stackoverflow.com/questions/2208933/how-do-i-force-a-favicon-refresh
