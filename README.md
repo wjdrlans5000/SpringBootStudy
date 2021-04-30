@@ -1263,3 +1263,43 @@ public class SampleControllerTest {
 </html>
 ```
 
+# Spring Boot WebMvc - HtmlUnit
+- HTML을 단위테스트 하기 위한 툴
+- HTML 템플릿 뷰 테스트를 보다 전문적으로 하자
+  - http://htmlunit.sourceforge.net/
+  - http://htmlunit.sourceforge.net/gettingStarted.html
+  - 의존성추가
+  - xpath를 사용해서 테스트도 가능하다.(XML문서를 네비게이션 할때 유용한 문법)
+```xml
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>htmlunit-driver</artifactId>
+    <scope>test</scope>
+</dependency>
+
+<dependency>
+    <groupId>net.sourceforge.htmlunit</groupId>
+    <artifactId>htmlunit</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+```java
+
+  @Autowired
+  WebClient webClient;
+
+  /**
+   * 좀더 HTML에 특화된 테스트를 작성할 수 있다.
+   * @throws Exception
+   */
+  @Test
+  public void hello() throws Exception {
+          // page정보를 가져올때 page interface로 리턴한다.
+          // HTMLPage타입을 사용해야지 좀더 다양한 인터페이스를 사용할 수 있다.
+          HtmlPage page = webClient.getPage("/hellogimun");
+          // h1을 하나 쿼리해서 텍스트를 assertion
+          HtmlHeading1 h1 =  page.getFirstByXPath("//h1");
+          assertThat(h1.getTextContent()).isEqualToIgnoringCase("gimun");
+  }
+```
