@@ -1263,3 +1263,22 @@ public class SampleControllerTest {
 </html>
 ```
 
+# Spring Boot WebMvc - HtmlUnit
+- HTML 템플릿 뷰 테스트를 보다 전문적으로 하자
+  - http://htmlunit.sourceforge.net/
+  - http://htmlunit.sourceforge.net/gettingStarted.html
+  - 의존성추가
+  - xpath를 사용해서 테스트도 가능하다.
+```xml
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>htmlunit-driver</artifactId>
+    <scope>test</scope>
+</dependency>
+
+<dependency>
+    <groupId>net.sourceforge.htmlunit</groupId>
+    <artifactId>htmlunit</artifactId>
+    <scope>test</scope>
+</dependency>
+```
