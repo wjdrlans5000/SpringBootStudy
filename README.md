@@ -1303,3 +1303,7 @@ public class SampleControllerTest {
           assertThat(h1.getTextContent()).isEqualToIgnoringCase("gimun");
   }
 ```
+# Spring Boot WebMvc - ExceptionHandler
+- 애플리케이션을 실행하면 기본적인 에러핸들러가 등록되어있다.
+- 해당 에러핸들러에의해 에러페이지가 표출됨.
+- 
