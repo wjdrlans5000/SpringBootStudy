@@ -1315,5 +1315,6 @@ public class SampleControllerTest {
   - 커스터마이징 방법
     - ErrorController 구현
 - CUSTOM 한 정적 에러페이지를 만들고싶을경우
+  - 에러가 발생했을때 응답의 상태값에 따라 다른 웹페이지를 보여주고싶을때
   - resources>error>{errorCode}.html 파일을 만들면된다.    
-  - 
+  - ErrorViewResolver 구현
