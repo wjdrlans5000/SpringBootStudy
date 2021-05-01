@@ -1303,3 +1303,18 @@ public class SampleControllerTest {
           assertThat(h1.getTextContent()).isEqualToIgnoringCase("gimun");
   }
 ```
+# Spring Boot WebMvc - ExceptionHandler
+- 애플리케이션을 실행하면 기본적인 에러핸들러가 등록되어있다.
+- 해당 에러핸들러에의해 에러페이지가 표출됨.
+- 스프링 부트가 제공하는 기본 예외 처리기
+  - BasicErrorController
+    - HTML과 JSON 응답 지원
+    - text/html요청이 들어오면 html로 그렇지 않으면 json으로 리턴 
+    - @RequestMapping({"${server.error.path:${error.path:/error}}"})
+      - server.error.path 키값이 없으면 ${error.path:/error} > error.path 키값이 없으면 /error
+  - 커스터마이징 방법
+    - ErrorController 구현
+- CUSTOM 한 정적 에러페이지를 만들고싶을경우
+  - 에러가 발생했을때 응답의 상태값에 따라 다른 웹페이지를 보여주고싶을때
+  - resources>error>{errorCode}.html 파일을 만들면된다.    
+  - ErrorViewResolver 구현
