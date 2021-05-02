@@ -1327,8 +1327,61 @@ public class SampleControllerTest {
   - Relation
   - Hypertext Reference
 - spring-boot-starter-hateoas 의존성 추가
+- https://spring.io/guides/gs/rest-hateoas/
+- https://docs.spring.io/spring-hateoas/docs/current/reference/html/
+
 - ObjectMapper 제공
   - spring.jackson.*
   - Jackson2ObjectMapperBuilder
 
-    
+- LinkDiscovers 제공
+- 클라이언트 쪽에서 링크 정보를 Rel 이름으로 찾을때 사용할 수 있는 XPath 확장 클래스
+
+```java
+@RunWith(SpringRunner.class)
+@WebMvcTest(SampleController.class)
+public class SampleControllerTest {
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @Test
+    public void hello() throws Exception {
+        mockMvc.perform(get("/hello"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._links.self").exists());
+    }
+
+}
+```
+```java
+@RestController
+public class SampleController {
+
+    @GetMapping("/hello")
+    public EntityModel hello(){
+        Hello hello = new Hello();
+        hello.setPrefix("Hey,");
+        hello.setName("Gimun");
+
+        EntityModel<Hello> entityModel = EntityModel.of(hello);
+
+        entityModel.add(linkTo(methodOn(SampleController.class).hello()).withSelfRel());
+
+        return entityModel;
+    }
+}
+```
+```
+//응답 
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/hal+json"]
+     Content type = application/hal+json
+             Body = {"prefix":"Hey,","name":"Gimun","_links":{"self":{"href":"http://localhost/hello"}}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+```
