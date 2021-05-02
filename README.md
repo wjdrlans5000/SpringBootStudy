@@ -1318,3 +1318,17 @@ public class SampleControllerTest {
   - 에러가 발생했을때 응답의 상태값에 따라 다른 웹페이지를 보여주고싶을때
   - resources>error>{errorCode}.html 파일을 만들면된다.    
   - ErrorViewResolver 구현
+
+# Spring Boot WebMvc - HATEOAS
+- Hypermedia As The Engine Of Application State
+- 서버: 현재 리소스와 연관된 링크 정보를 클라이언트에게 제공한다.
+- 클라이언트: 연관된 링크정보를 바탕으로 리소스에 접근한다.
+- 연관링크정보: 
+  - Relation
+  - Hypertext Reference
+- spring-boot-starter-hateoas 의존성 추가
+- ObjectMapper 제공
+  - spring.jackson.*
+  - Jackson2ObjectMapperBuilder
+
+    
