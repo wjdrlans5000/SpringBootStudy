@@ -1385,3 +1385,5 @@ MockHttpServletResponse:
    Redirected URL = null
           Cookies = []
 ```
+
+# Spring Boot WebMvc - CORS
