@@ -1399,7 +1399,7 @@ MockHttpServletResponse:
 - Spring Mvc @CrossOrigin
   - spring boot 가 기본설정을 제공하기때문에 바로 사용이 가능함.
   - @Controller , @RestController 
-- @CrossOrigin 설정을 해주면 Access-Control-Allow-Origin 헤더가 응답에 포함됨
+- @CrossOrigin 설정을 해주면 Access-Control-Allow-Origin : http://localhost:18080 헤더가 응답에 포함됨(즉, http://localhost:18080에 대하여 CORS를 허용한다고 알려줌 )
 ```java
 @SpringBootApplication
 @RestController
