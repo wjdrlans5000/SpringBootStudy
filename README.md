@@ -1387,3 +1387,45 @@ MockHttpServletResponse:
 ```
 
 # Spring Boot WebMvc - CORS
+- Cross-Origin Resource Sharing
+- Single-Origin Policy를 우회하기 위한 표준기술
+  - Single-Origin Policy : 같은 오리진에서만 요청을 보낼수있다.
+  - Cross-Origin Resource Sharing : 서로다른 오리진끼리 리소스를 쉐어할수있는 기능을 제공.
+  - Origin?
+    - URL 스키마 (http,https)
+    - hostnamee (whiteship.me, localhost)
+    - port (8080,18080)
+  - http://localhost:8080 > http://localhost:18080 으로 요청시 SOP 위반으로 호출을 하지못한다.
+- Spring Mvc @CrossOrigin
+  - spring boot 가 기본설정을 제공하기때문에 바로 사용이 가능함.
+  - @Controller , @RestController 
+- @CrossOrigin 설정을 해주면 Access-Control-Allow-Origin 헤더가 응답에 포함됨
+```java
+@SpringBootApplication
+@RestController
+public class SpringcorsserverApplication {
+
+    @CrossOrigin(origins = "http://localhost:18080")
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringcorsserverApplication.class, args);
+    }
+
+}
+
+```
+-WebMvcConfigurer 사용해서 글로벌 설정
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:18080");
+    }
+}
+```
