@@ -1438,3 +1438,41 @@ public class WebConfig implements WebMvcConfigurer {
   - DataSource (DataSourceAutoConfiguration)
   - JdbcTemplate (JdbcTemplateAutoConfiguration)
   - HikariCP 도 같이 의존성으로 들어온다.
+- DataSource 설정을 하지않으면, 스프링부트는 자동적으로 인메모리 데이터베이스 설정을해준다.
+- DataSourceProperties > determineUsername에서 인메모리 데이터베이스 기본 연결정보를 확인할수 있다.(determineDatabaseName/determineUsername/determinePassword)
+  - URL: "testdb"
+  - username: "sa"
+  - password: ""
+- H2 콘솔 사용하는 방법
+  - spring-boot-devtools를 추가하거나...
+  - spring.h2.console.enabled=true 만 추가.
+  - /h2-console로 접속 (이 path도 바꿀 수 있음)
+  - url 콘솔에 출력되는 URL인지 확인할것.
+
+JDBCTemplate 을 사용시 이점
+- Exception처리가 잘되어있음
+- Exception이 계층구조로 처리되어있어 사용하기 좋다. DataAccessException ... 
+```JAVA
+@Component
+public class H2Runner implements ApplicationRunner {
+
+    @Autowired
+    DataSource dataSource;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        try(Connection connection = dataSource.getConnection()){
+            System.out.println("url : " + connection.getMetaData().getURL());
+            System.out.println("username : " + connection.getMetaData().getUserName());
+            Statement statement =  connection.createStatement();
+            String sql = "CREATE TABLE USER(ID INTEGER NOT NULL, name varchar(255), PRIMARY KEY(ID))";
+            statement.executeUpdate(sql);
+        }
+
+        jdbcTemplate.execute("INSERT INTO USER VALUES(1,'GIMUN')");
+    }
+}
+```
