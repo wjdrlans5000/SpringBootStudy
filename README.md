@@ -1429,3 +1429,12 @@ public class WebConfig implements WebMvcConfigurer {
     }
 }
 ```
+# Spring Boot - 인메모리 데이터베이스
+- 지원하는 인-메모리 데이터베이스
+  - H2 (추천, 콘솔 때문에...)
+  - HSQL
+  - Derby
+- Spring-JDBC 가 클래스패스에 존재하면 자동설정되는 빈
+  - DataSource (DataSourceAutoConfiguration)
+  - JdbcTemplate (JdbcTemplateAutoConfiguration)
+  - HikariCP 도 같이 의존성으로 들어온다.
