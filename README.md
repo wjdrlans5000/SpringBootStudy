@@ -1476,3 +1476,17 @@ public class H2Runner implements ApplicationRunner {
     }
 }
 ```
+
+# Spring Boot - DBCP, MYSQL
+- DBCP ?
+  - DataBaseConnectionPool 
+  - Connection을 생성할때 많은 일들이 일어나는 과정이기때문에 미리 커넥션을 여러개 생성해두고 애플리케이션이 필요로할때마다 사용하는개념
+  - 최대 갯수,  최대 웨이팅시간 .. 등등 상세한 설정이 가능함.
+  - 애플리케이션 성능에 핵심적인 역할을 함.
+- 지원하는 DBCP
+  - 각 DBCP의 기본값 등 설정들은 공식문서 참조..
+    1. HikariCP (2.x 이상)(스프링부트에서 기본적으로 사용)
+      - https://github.com/brettwooldridge/HikariCP#frequently-used
+    3. TomcatCP (1.5.x)
+    4. CommonsDBCP2
+    
