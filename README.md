@@ -1476,3 +1476,47 @@ public class H2Runner implements ApplicationRunner {
     }
 }
 ```
+
+# Spring Boot - DBCP, MYSQL
+- DBCP ?
+  - DataBaseConnectionPool 
+  - Connection을 생성할때 많은 일들이 일어나는 과정이기때문에(비용이 큼) 미리 커넥션을 여러개 생성해두고 애플리케이션이 필요로할때마다 사용하는개념
+  - 최대 갯수,  최대 웨이팅시간 .. 등등 상세한 설정이 가능함.
+  - 애플리케이션 성능에 핵심적인 역할을 함.
+- 지원하는 DBCP
+  - 각 DBCP의 기본값 등 설정들은 공식문서 참조..
+    1. HikariCP (2.x 이상)(스프링부트에서 기본적으로 사용)
+      - https://github.com/brettwooldridge/HikariCP#frequently-used
+    3. TomcatCP (1.5.x)
+    4. CommonsDBCP2
+    
+* ConnectionPool 의 개수가 많다고 좋은것일까 ?
+- Connection 풀의 개수도 잘 결정해야함
+- Connection 풀의 개수가 많다고 좋은것이아님.
+- 실제 요청을 처리할수 있는 커넥션의 수는 CPU코어의 개수와 동일하다.
+
+- MYSQL
+    - MYSQL 사용시 커넥터 의존성 추가
+    - DataSource 구현체
+```xml
+<!--    MySQL 접속할수있는 커넥터 의존성 추가 -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency>
+```
+- docker : 컨테이너 솔루션( Linux 컨테이너를 만들고 사용할 수 있도록 하는 컨테이너화 기술)
+- MYSQL Docker 
+- docker run -p 3306:3306 --name mysql_test -e MYSQL_ROOT_PASSWORD=1 -e MYSQL_DATABASE=springboot -e MYSQL_USER=gimun -e MYSQL_PASSWORD=pass -d mysql
+- -p 3306:3306 => 도커 컨테이너 내부의 3306포트와 로컬 3306포트를 바인딩
+- --name mysql_test 이미지의 alias로 mysql_test 로 지정
+- -e MYSQL_ROOT_PASSWORD=1 루트패스워드를 1로 설정
+- -e MYSQL_DATABASE=springboot springboot 데이터베이스 를 생성
+- -d mysql 데몬(백그라운드)으로 실행 
+- docker exec -i -t mysql_test bash : 컨테이너에 들어가서 bash를 실행하라는 명령어
+- mysql -u gimun -p / pass
+- show databases;
+- use springboot;
+- show tables;
+- mysql은 구독료 발생 , gpl이기때문에 소스공개필수
+- mariaDB사용 (커뮤니티 버전의 MYSQL) -> GPL2 이기에 소스코드 공개 의무가 발생할수 있음.
