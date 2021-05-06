@@ -1507,9 +1507,16 @@ public class H2Runner implements ApplicationRunner {
 ```
 - docker : 컨테이너 솔루션( Linux 컨테이너를 만들고 사용할 수 있도록 하는 컨테이너화 기술)
 - MYSQL Docker 
-- docker run -p 3306:3306 --name mysql_test -e MYSQL_ROOT_PASSWORD=1 -e MYSQL_DATABASE=springboot -e MYSQL_USER=june -e MYSQL_PASSWORD=java -d mysql
+- docker run -p 3306:3306 --name mysql_test -e MYSQL_ROOT_PASSWORD=1 -e MYSQL_DATABASE=springboot -e MYSQL_USER=gimun -e MYSQL_PASSWORD=pass -d mysql
 - -p 3306:3306 => 도커 컨테이너 내부의 3306포트와 로컬 3306포트를 바인딩
 - --name mysql_test 이미지의 alias로 mysql_test 로 지정
 - -e MYSQL_ROOT_PASSWORD=1 루트패스워드를 1로 설정
 - -e MYSQL_DATABASE=springboot springboot 데이터베이스 를 생성
 - -d mysql 데몬(백그라운드)으로 실행 
+- docker exec -i -t mysql_test bash : 컨테이너에 들어가서 bash를 실행하라는 명령어
+- mysql -u gimun -p / pass
+- show databases;
+- use springboot;
+- show tables;
+- mysql은 구독료 발생 , gpl이기때문에 소스공개필수
+- mariaDB사용 (커뮤니티 버전의 MYSQL) -> GPL2 이기에 소스코드 공개 의무가 발생할수 있음.
