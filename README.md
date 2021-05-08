@@ -1558,3 +1558,16 @@ Docker로 postgresql 데이터베이스 실행
     <artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 ```
+- 스프링 데이터 JPA 사용하기
+  - @Entity 클래스 만들기
+  - Repository 만들기
+- 스프링 데이터 리파지토리 테스트 만들기
+  - H2 DB를 테스트 의존성에 추가하기
+  - @DataJpaTest (슬라이스 테스트) 작성
+  - database 의존성 추가 (mysql,postgres)
+  - application.properties 설정 추가
+  ```
+  spring.datasource.url=jdbc:mysql://localhost:3306/springboot
+  spring.datasource.username=gimun
+  spring.datasource.password=pass
+  ```
