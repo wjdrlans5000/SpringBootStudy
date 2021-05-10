@@ -1591,3 +1591,29 @@ Docker로 postgresql 데이터베이스 실행
   create sequence hibernate_sequence start with 1 increment by 1
   create table account (id bigint not null, email varchar(255), password varchar(255), username varchar(255), primary key (id))
   ```
+# Spring Boot - 데이터베이스 마이그레이션
+- Flyway와 Liquibase가 대표적인데,  Flyway를 사용
+- https://docs.spring.io/spring-boot/docs/2.3.10.RELEASE/reference/htmlsingle/#howto-execute-flyway-database-migrations-on-startup
+- DBSchema || DATAVersion 관리도 가능하다. (SQL 파일로 관리함.)
+- 의존성 추가
+```xml
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+</dependency>
+```
+
+- 사용방법 
+  - resources>db.migration 폴더생성
+  - V1__init.sql 
+  - 컬럼이 추가되거나 , 등등 상황이 발생할경우, "절대 기존SQL파일을 건들여선안된다."
+  - 반드시 새로운 SQL파일 생성후 추가사항 작성해야함.
+  - db.migration 경로 못찾을경우 직접 지정.
+    - spring.flyway.check-location=false
+    - spring.flyway.locations=classpath:/db/migration
+- 마이그레이션 파일 이름
+  - V숫자__이름.sql
+  - V는 꼭 대문자로.
+  - 숫자는 순차적으로 (타임스탬프 권장)
+  - 숫자와 이름 사이에 언더바 두 개.
+  - 이름은 가능한 서술적으로.
