@@ -1617,3 +1617,13 @@ Docker로 postgresql 데이터베이스 실행
   - 숫자는 순차적으로 (타임스탬프 권장)
   - 숫자와 이름 사이에 언더바 두 개.
   - 이름은 가능한 서술적으로.
+- JPA는 class load 시점에 entity 와 JPA Interface 를 이용하여 SQL 문을 자동 생성하여 삽입시켜주는 녀석인데 로그를 보면 ...org.hibernate.persister.entity.SingleTableEntityPersister 의 생성자에서 그 역할을 하는듯 하다. 
+- 그런데 openjdk11에서는 javaassist 가 removed 된건지... entityManagerFactory 빈을 생성할 때 at javassist.util.proxy.SecurityActions.setAccessible(SecurityActions.java:103) <--- 이곳에서 NullPointerException 이 발생한다. 
+- pom.xml 에 javassist 에 대한 dependency를 추가해주면 된다.
+```xml
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.23.1-GA</version>
+        </dependency>
+```
