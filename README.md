@@ -1571,3 +1571,13 @@ Docker로 postgresql 데이터베이스 실행
   spring.datasource.username=gimun
   spring.datasource.password=pass
   ```
+# Spring Boot - 데이터베이스 초기화 
+- JPA를 활용한 데이터베이스 초기화 
+  - spring.jpa.hibernate.ddl-auto
+    - create: (생성)
+    - create-drop: (생성-삭제)
+    - update: 스키마와 엔티티간의 추가된것만 변경 (기존 데이터 유지) * 개발시 추천
+    - validate: 스키마와 엔티티간의 싱크만 확인 (운영시)
+    - none: 생성하지않음
+  - spring.jpa.generate-ddl=true 로 설정해주어야 동작한다.
+- 
