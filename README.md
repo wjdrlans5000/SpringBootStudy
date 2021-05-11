@@ -1668,3 +1668,61 @@ public class RedisRunner implements ApplicationRunner {
 }
 
 ```
+# Spring Boot -  MongoDB
+- MongoDB는 JSON기반의 도큐먼트 데이터베이스이다.(스키마가 없음)
+- Spring WebFlux를 사용하는경우에는 reactive mongo를 사용하는것이 좋음.
+
+의존성 추가
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+```
+
+- MongoDB 도커 실행
+  - docker run -p 27017:27017 --name mongo_boot -d mongo 
+  - docker exec -i -t mongo_boot bash
+  - mongo
+
+- 스프링 데이터 MongoDB
+  - MongoTemplate, Repository는 springboot가 기본제공 
+  - MongoTemplate
+  - MongoRepository
+  - 내장형MongoDB 
+    - de.flapdoodle.emtbed:de.flapdoodle.embed.mongo
+  - @DataMongoTest 
+- MongoDB 테스트용 내장서버 의존성 추가 
+```xml
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <scope>test</scope>
+        </dependency>
+```
+- MongoDB 슬라이싱테스트(임베디드 몽고디비사용)
+```java
+@RunWith(SpringRunner.class)
+@DataMongoTest
+public class AccountRepositoryTest {
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Test
+    public void findByEmail(){
+        Account account = new Account();
+        account.setUsername("gimun");
+        account.setEmail("wjdrlans@mail.com");
+
+        accountRepository.save(account);
+
+        Optional<Account> byId =  accountRepository.findById(account.getId());
+        assertThat(byId).isNotEmpty();
+
+        Optional<Account> byEmail =  accountRepository.findByEmail(account.getEmail());
+        assertThat(byEmail).isNotEmpty();
+        assertThat(byEmail.get().getUsername()).isEqualTo("gimun");
+    }
+}
+```
