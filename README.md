@@ -1649,3 +1649,22 @@ Docker로 postgresql 데이터베이스 실행
   - get {key}
   - hgetall {key}
   - hget {key} {column}
+
+- Redis 테스트 코드 
+```java
+@Component
+public class RedisRunner implements ApplicationRunner {
+
+    @Autowired
+    StringRedisTemplate redisTemplate;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        ValueOperations<String,String> values =  redisTemplate.opsForValue();
+        values.set("gimuin","whiteship");
+        values.set("springboot","2.3.10");
+        values.set("hello","world");
+    }
+}
+
+```
