@@ -1628,3 +1628,24 @@ Docker로 postgresql 데이터베이스 실행
             <version>3.23.1-GA</version>
         </dependency>
 ```
+# Spring Boot - Redis
+- 캐시, 메시지 브로커, 키/벨류 스토어등으로 사용가능하다.
+
+- 의존성 추가
+  - spring-boot-starter-data-redis
+
+- Redis 설치 및 실행 (도커)
+  - docker run -p 6379:6379 --name redis_boot -d redis
+  - docker exec -i -t redis_boot redis-cli
+
+- Spring data redis
+  - https://projects.spring.io/spring-data-redis/
+  - StringRedisTemplate (String에 특화) or Redis Template
+  - extends CrudRepository
+  
+- Redis 주요 커맨드
+  - https://redis.io/commands
+  - keys *
+  - get {key}
+  - hgetall {key}
+  - hget {key} {column}
