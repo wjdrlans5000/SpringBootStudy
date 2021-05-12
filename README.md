@@ -1749,3 +1749,25 @@ public class AccountRepositoryTest {
   - 기본 password: neo4j
 - MongoDB와 마찬가지로 Repository를 생성해서 사용할 수 도있다.
 
+# Spring Boot - Database 정리
+- https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#features.sql
+  - 5.11. Working with SQL Databases
+    - JDBC만 있으면 JDBCTemplate을 자동으로 빈으로 등록해준다.
+  - 5.11.1. Configure a DataSource
+    - 데이터소스 설정하는 방법 (DataSource커스터마이징 properties파일로 커스터마이징 가능.)
+  - Embedded Database Support
+    - 내장 데이터베이스는 H2 DB 를 추천
+    - 의존성만 추가하면아무런 설정을 하지않아도 바로 사용이 가능하다.
+  - Connection to a Production Database, Supported Connection Pools
+    - HikariCP 가 기본 커넥션풀로 제공 (2.x)
+    - MYSQL, ,mariaDb Postgres 도 자동설정을 제공함.
+  - 5.11.3. JPA and Spring Data JPA
+  - Spring Data JPA Repositories
+  - Creating and Dropping JPA Databases
+  - Spring-data-xxx 를 제공하는 프로젝트들은 xxxTemplate 뿐만아니라 xxxRepository를 지원하기때문에 손쉽게 사용이 가능하다.
+  - 5.11.5. Using H2’s Web Console
+    - h2콘솔 사용하는 방법 spring dev tools 추가하거나 properties 파일 spring.h2.console.enabled  설정 true
+  - Code Generation
+    - 자바코드를 생성해서 sql을 생성된 자바코드로 type safe하게 작성할수있는 유틸리티 설정이 복잡. 나중에 설정해서 사용해보기
+  - Nosql Redis, MongoDB ,Neo4j
+  
