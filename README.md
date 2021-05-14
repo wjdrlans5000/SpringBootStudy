@@ -1807,7 +1807,8 @@ public class AccountRepositoryTest {
   - Accept-Header에 따라 달라진다.
   - 일반적인 요청의 경우 Accept-Header에 의해 (text/html) 폼인증으로 넘어가게됨.
 
-- 시큐리티적용 테스트를 위한 의존성 추가
+- 시큐리티적용하여 테스트를 하기 위한 의존성 추가
+- https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html
 ```xml
 <dependency>
     <groupId>org.springframework.security</groupId>
