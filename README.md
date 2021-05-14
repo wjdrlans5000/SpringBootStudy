@@ -1771,3 +1771,16 @@ public class AccountRepositoryTest {
     - 자바코드를 생성해서 sql을 생성된 자바코드로 type safe하게 작성할수있는 유틸리티 설정이 복잡. 나중에 설정해서 사용해보기
   - Nosql Redis, MongoDB ,Neo4j
   
+# Spring boot - Security 
+- 의존성 추가 
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+- 스프링 시큐리티
+  - 웹시큐리티
+  - 메소드 시큐리티
+  - 다양한 인증 방법 지원
+    - LDAP, 폼 인증, Basic, OAuth
