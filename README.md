@@ -1784,3 +1784,34 @@ public class AccountRepositoryTest {
   - 메소드 시큐리티
   - 다양한 인증 방법 지원
     - LDAP, 폼 인증, Basic, OAuth
+    - 
+- 스프링부트 시큐리티 자동 설정
+- SecurityAutoConfiguration
+  - EventPublisher를 등록해준다. , Handler를 등록해서 유저의 상태를 변경하는등 제어가 가능하다.
+  - WebSecurityConfigurerAdapter 의 기본 설정을 따른다.
+    -  WebSecurityConfigurerAdapter.class 를 상속받아서 자바기반설정을 많이 사용함.
+- UserDetailsServiceAutoConfiguration
+  - AuthenticationManager.class, AuthenticationProvider.class, UserDetailsService 가 없을경우 InMemoryUserDetailsManager 를 만들어서 랜덤유저를 생성해준다.
+- spring-boot-starter-security
+- 기본 유저네임 : user
+- Password: 애플리케이션을 실행할 때 마다 랜덤 값 생성 (콘솔에 출력 됨.)
+- 패스워드는 매번 새로이 설정
+- spring.security.user.name
+- spring.security.user.password
+
+* 스프링부트가 Spring-Security 에 대한 자동설정을 제공해주는것이 그리 많지않음..(InMemoryUserDetailsManager로 유저를 생성해준것 정도밖에 없음.)
+
+- 기본 설정 
+  - 모든 요청에 대한 인증을 필요로하게됨
+  - Accept-Header에 아무런 정보를 제공하지 않을경우 시큐리티는 BasicAuthentication 을 요구한다.
+  - Accept-Header에 따라 달라진다.
+  - 일반적인 요청의 경우 Accept-Header에 의해 (text/html) 폼인증으로 넘어가게됨.
+
+- 시큐리티적용 테스트를 위한 의존성 추가
+```xml
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-test</artifactId>
+    <version>${spring-security.version}</version>
+</dependency>
+```
