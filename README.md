@@ -1749,3 +1749,70 @@ public class AccountRepositoryTest {
   - 기본 password: neo4j
 - MongoDB와 마찬가지로 Repository를 생성해서 사용할 수 도있다.
 
+# Spring Boot - Database 정리
+- https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#features.sql
+  - 5.11. Working with SQL Databases
+    - JDBC만 있으면 JDBCTemplate을 자동으로 빈으로 등록해준다.
+  - 5.11.1. Configure a DataSource
+    - 데이터소스 설정하는 방법 (DataSource커스터마이징 properties파일로 커스터마이징 가능.)
+  - Embedded Database Support
+    - 내장 데이터베이스는 H2 DB 를 추천
+    - 의존성만 추가하면아무런 설정을 하지않아도 바로 사용이 가능하다.
+  - Connection to a Production Database, Supported Connection Pools
+    - HikariCP 가 기본 커넥션풀로 제공 (2.x)
+    - MYSQL, ,mariaDb Postgres 도 자동설정을 제공함.
+  - 5.11.3. JPA and Spring Data JPA
+  - Spring Data JPA Repositories
+  - Creating and Dropping JPA Databases
+  - Spring-data-xxx 를 제공하는 프로젝트들은 xxxTemplate 뿐만아니라 xxxRepository를 지원하기때문에 손쉽게 사용이 가능하다.
+  - 5.11.5. Using H2’s Web Console
+    - h2콘솔 사용하는 방법 spring dev tools 추가하거나 properties 파일 spring.h2.console.enabled  설정 true
+  - Code Generation
+    - 자바코드를 생성해서 sql을 생성된 자바코드로 type safe하게 작성할수있는 유틸리티 설정이 복잡. 나중에 설정해서 사용해보기
+  - Nosql Redis, MongoDB ,Neo4j
+  
+# Spring boot - Security 
+- 의존성 추가 
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+- 스프링 시큐리티
+  - 웹시큐리티
+  - 메소드 시큐리티
+  - 다양한 인증 방법 지원
+    - LDAP, 폼 인증, Basic, OAuth
+    - 
+- 스프링부트 시큐리티 자동 설정
+- SecurityAutoConfiguration
+  - EventPublisher를 등록해준다. , Handler를 등록해서 유저의 상태를 변경하는등 제어가 가능하다.
+  - WebSecurityConfigurerAdapter 의 기본 설정을 따른다.
+    -  WebSecurityConfigurerAdapter.class 를 상속받아서 자바기반설정을 많이 사용함.
+- UserDetailsServiceAutoConfiguration
+  - AuthenticationManager.class, AuthenticationProvider.class, UserDetailsService 가 없을경우 InMemoryUserDetailsManager 를 만들어서 랜덤유저를 생성해준다.
+- spring-boot-starter-security
+- 기본 유저네임 : user
+- Password: 애플리케이션을 실행할 때 마다 랜덤 값 생성 (콘솔에 출력 됨.)
+- 패스워드는 매번 새로이 설정
+- spring.security.user.name
+- spring.security.user.password
+
+* 스프링부트가 Spring-Security 에 대한 자동설정을 제공해주는것이 그리 많지않음..(InMemoryUserDetailsManager로 유저를 생성해준것 정도밖에 없음.)
+
+- 기본 설정 
+  - 모든 요청에 대한 인증을 필요로하게됨
+  - Accept-Header에 아무런 정보를 제공하지 않을경우 시큐리티는 BasicAuthentication 을 요구한다.
+  - Accept-Header에 따라 달라진다.
+  - 일반적인 요청의 경우 Accept-Header에 의해 (text/html) 폼인증으로 넘어가게됨.
+
+- 시큐리티적용하여 테스트를 하기 위한 의존성 추가
+- https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html
+```xml
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-test</artifactId>
+    <version>${spring-security.version}</version>
+</dependency>
+```
