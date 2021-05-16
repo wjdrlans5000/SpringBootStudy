@@ -1816,3 +1816,96 @@ public class AccountRepositoryTest {
     <version>${spring-security.version}</version>
 </dependency>
 ```
+
+# Spring boot - Security 커스터마이징
+- 1. 웹 시큐리티 설정
+```java
+@Configuration
+public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/","/hello").permitAll() // "/", "/hello" 요청에 대하여는 허용
+                .anyRequest().authenticated()   //나머지 요청은 인증필요
+                .and()
+                .formLogin() //form  로그인을 사용하고
+                .and()
+                .httpBasic();  //httpbasic을 사용한다.
+
+
+    }
+}
+
+```
+- 2. UserDetailsService 구현
+  - 일반적으로 서비스 계층에 UserDetailsService 인터페이스를 구현한다.
+```java
+@Service
+public class AccountService implements UserDetailsService {
+    @Autowired
+    private AccountRepository accountRepository;
+
+    public Account creatAccount(String username, String password){
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(password);
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Account> byUsername = accountRepository.findByUsername(username);
+//        byUsername에 실제 데이터가 없으면 UsernameNotFoundException 예외를 던짐 
+//        있을경우는 리턴값으로 account가 나옴
+        Account account = byUsername.orElseThrow(() -> new UsernameNotFoundException(username));
+//       서비스마다 제각각으로 구현되어있는 유저정보(여기선 account)를 UserDetails 라는 인터페이스의 구현체를 리턴해야함.
+//       스프링 시큐리티에서는 User라는 이름으로 기본 제공해줌.
+//       따라서 username,password,authorities를 인자료 User 구현체 리턴
+//        우리가 가진 account 정보를 UserDetails로 변환하는 과정.
+        return new User(account.getUsername(), account.getPassword(), authorities());
+    }
+
+    private Collection<? extends GrantedAuthority> authorities() {
+//        ROLE_USER라는 권한을 가진 유저라는 것을 셋팅.
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER "));
+    }
+
+}
+```
+
+- 3. PasswordEncoder 설정 및 사용
+  - 스프링 시큐리티 최신버전 기준으로 PasswordEncoder 가 등록되어 있지않으면 인코딩 에러가 발생한다.
+  - {id} password 형태의 포맷으로 되어있지않은경우 예외가 발생한다.
+  - 스프링 시큐리티에서 권장하는 PasswordEncoder를 사용해야함.
+  - https://docs.spring.io/spring-security/site/docs/current/reference/html5/#core-services-pa
+```java
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        /*
+         * 절대 하면 안되는 방식...
+         * 아무런 인코딩과 디코딩을 하지 않게 바꾼것..
+         * */
+//        return NoOpPasswordEncoder.getInstance();
+        /*
+        * 이 패스워드 인코더를 사용
+        * */
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+```
+```java
+@Service
+public class AccountService implements UserDetailsService {
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Account creatAccount(String username, String password){
+        Account account = new Account();
+        account.setUsername(username);
+//        account.setPassword(password);//이렇게 하면 시큐리티 보안 이슈에 걸림. 인코딩 필수
+        account.setPassword(passwordEncoder.encode(password));
+        return accountRepository.save(account);
+    }
+```
