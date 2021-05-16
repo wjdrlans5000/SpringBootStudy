@@ -1872,3 +1872,40 @@ public class AccountService implements UserDetailsService {
 
 }
 ```
+
+- 3. PasswordEncoder 설정 및 사용
+  - 스프링 시큐리티 최신버전 기준으로 PasswordEncoder 가 등록되어 있지않으면 인코딩 에러가 발생한다.
+  - {id} password 형태의 포맷으로 되어있지않은경우 예외가 발생한다.
+  - 스프링 시큐리티에서 권장하는 PasswordEncoder를 사용해야함.
+  - https://docs.spring.io/spring-security/site/docs/current/reference/html5/#core-services-pa
+```java
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        /*
+         * 절대 하면 안되는 방식...
+         * 아무런 인코딩과 디코딩을 하지 않게 바꾼것..
+         * */
+//        return NoOpPasswordEncoder.getInstance();
+        /*
+        * 이 패스워드 인코더를 사용
+        * */
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+```
+```java
+@Service
+public class AccountService implements UserDetailsService {
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Account creatAccount(String username, String password){
+        Account account = new Account();
+        account.setUsername(username);
+//        account.setPassword(password);//이렇게 하면 시큐리티 보안 이슈에 걸림. 인코딩 필수
+        account.setPassword(passwordEncoder.encode(password));
+        return accountRepository.save(account);
+    }
+```
