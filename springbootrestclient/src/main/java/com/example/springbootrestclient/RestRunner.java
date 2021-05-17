@@ -19,9 +19,17 @@ public class RestRunner  implements ApplicationRunner {
     @Autowired
     WebClient.Builder builder;
 
+//    WebClient webClient;
+//
+//    public RestRunner(WebClient.Builder builder){
+//        this.webClient = builder.build();
+//    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        WebClient webClient = builder.build();
+        WebClient webClient = builder
+                .baseUrl("http://localhost::8080")
+                .build();
 
 //        RestTemplate restTemplate =  restTemplateBuilder.build();
 
@@ -41,7 +49,7 @@ public class RestRunner  implements ApplicationRunner {
 
         /* Stream API 인 Mono임 subscribe 하기전까진 진행되지않는다. */
         /* subscribe 해야지만 해당 요청을 실행함. Non-Blocking*/
-        Mono<String> helloMono = webClient.get().uri("http://localhost:8080/hello")
+        Mono<String> helloMono = webClient.get().uri("/hello")
                     .retrieve()
                     .bodyToMono(String.class);
         helloMono.subscribe(s -> {
@@ -53,7 +61,7 @@ public class RestRunner  implements ApplicationRunner {
             stopWatch.start();
         });
 
-        Mono<String> worldMono  = webClient.get().uri("http://localhost:8080/world")
+        Mono<String> worldMono  = webClient.get().uri("/world")
                     .retrieve()
                     .bodyToMono(String.class);
         worldMono.subscribe(s -> {
