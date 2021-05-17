@@ -1909,3 +1909,95 @@ public class AccountService implements UserDetailsService {
         return accountRepository.save(account);
     }
 ```
+
+# Spring Boot - RESTClient
+- 스프링부트가 제공해주는 자동 설정 빈은 RestTemplate, WebClient를 직접 제공해주는것이 아니라 RESTClient는 spring 에서 제공하는것.
+- 스프링부트는 RESTClient를 쉽게 사용할수 있도록 RestTemplateBuilder, WebClient.Builder를 빈으로 등록해준다.
+- Builder를 주입받아서, RestTemplate or WebClinet를 사용해야한다. 
+
+- RestTemplate
+  - Blocking I/O 기반의 동기화(Synchronous) API
+  - RestTemplateAutoConfiguration
+  - 프로젝트에 spring-web 모듈이 존재한다면, RestTemplateBuilder를 빈으로 등록해준다.
+  - https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#rest-client-access
+```java
+@Component
+public class RestRunner  implements ApplicationRunner {
+
+    @Autowired
+    RestTemplateBuilder restTemplateBuilder;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        RestTemplate restTemplate =  restTemplateBuilder.build();
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        /*
+          블럭킹 I/O 기반 이기때문에 해당 요청 라인의 응답이 오기까지 다음라인으로 진행되지않음. (동기적)
+        * */
+        // TODO /hello
+        String helloResult = restTemplate.getForObject("http://localhost:8080/hello",String.class);
+        System.out.println(helloResult);
+        // TODO /world
+        String worldResult = restTemplate.getForObject("http://localhost:8080/world",String.class);
+        System.out.println(worldResult);
+
+        stopWatch.stop();
+        System.out.println(stopWatch.prettyPrint());
+    }
+}
+
+```
+
+- WebClient
+  - Non-Blocking I/O 기반의 비동기(Asynchronous) API
+  - WebClientAutoConfiguration
+  - 프로젝트에 spring-webflux 모듈이 존재한다면, WebClient.Builder를 빈으로 등록해준다.
+  - https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-client
+ ```java
+ @Component
+public class RestRunner  implements ApplicationRunner {
+
+    @Autowired
+    WebClient.Builder builder;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        WebClient webClient = builder.build();
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        /* Stream API 인 Mono임 subscribe 하기전까진 진행되지않는다. */
+        /* subscribe 해야지만 해당 요청을 실행함. Non-Blocking*/
+        Mono<String> helloMono = webClient.get().uri("http://localhost:8080/hello")
+                    .retrieve()
+                    .bodyToMono(String.class);
+        helloMono.subscribe(s -> {
+            System.out.println(s);
+            if(stopWatch.isRunning()){
+                stopWatch.stop();
+            }
+            System.out.println(stopWatch.prettyPrint());
+            stopWatch.start();
+        });
+
+        Mono<String> worldMono  = webClient.get().uri("http://localhost:8080/world")
+                    .retrieve()
+                    .bodyToMono(String.class);
+        worldMono.subscribe(s -> {
+            System.out.println(s);
+            if(stopWatch.isRunning()){
+                stopWatch.stop();
+            }
+            System.out.println(stopWatch.prettyPrint());
+            stopWatch.start();
+        });
+
+        stopWatch.stop();
+        System.out.println(stopWatch.prettyPrint());
+    }
+}
+ ```
