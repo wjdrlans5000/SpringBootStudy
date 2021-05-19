@@ -2074,3 +2074,63 @@ public class SpringbootrestclientApplication {
             }
         };
 ```
+
+# Spring boot - 운영 
+- Spring boot Actuator 
+  - 운영중에 유용한 기능을 제공한다.
+  - 앤드포인트와 메트릭스, 그 데이터를 활용하는 모니터링 기능 제공 
+  - 특정 메모리 % 를 넘어서거나 특정 CPU % 를 넘어설 경우 알림 기능 도 가능함.
+  - shutdown을 제외한 다른 앤드포인트는 모두 활성화
+
+- 의존성 추가
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+- 기본 URL
+  - http://localhost:8080/actuator
+  - HATEOAS 형태로 제공됨.
+  - HTTP로 접근하는경우 공개되는 정보가 제한적. (health, info 만 공개) [기본 설정]
+
+# Spring boot - JMX
+- JConsole
+- jconsole 명령어로 접근이 가능함.
+- CPU, Heap, Thread .. 등의 정보를 제공 함
+* shutdown 이 공개 되어 있어서 shutdown이 가능하므로 주의 
+
+- VisualVM
+- JConsole과 거의 유사하지만, 플러그인이 존재해서 좀 더 편리하다.
+- Java10 부터는 내장되어 있지않아 추가 설치가 필요함.
+
+* 반드시 시큐리티 설정을 해서 사용할것.
+- 시스템 정보가 노출이 될 가능성이있다.
+
+
+# Spring boot - ADMIN
+- 스프링이 아닌 다른사용자가 제공하는 오픈소스 프로젝트
+- 어드민 서버설정
+- 의존성 추가
+```xml
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-server</artifactId>
+    <version>2.0.1</version>
+</dependency>
+```
+- @EnableAdminServer
+- 클라이언트 서버 설정
+```xml
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-client</artifactId>
+    <version>2.0.1</version>
+</dependency>
+```
+
+- spring.boot.admin.clinet.url=http://localhost:8080
+- management.endpoints.web.exposure.include=*
+
+- Actuator 나 JMX보다 좀 더 편리하게 관리할수 있음.
